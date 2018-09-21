@@ -1,0 +1,15 @@
+.navbar-nav{
+    font-size: 24px;
+}
+.navbar-brand{
+    font-size: 36px;
+    color: red;
+}
+#brand{
+    height: 36px;
+    padding: 4px;
+
+}
+nav{
+    margin-bottom: 0;
+}

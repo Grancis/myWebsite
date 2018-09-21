@@ -1,0 +1,33 @@
+#banner{
+    /* margin-top:-200px; */
+    display: block;
+}
+.profile-box{
+    margin-top:20px;
+    background-color:#F7F7F7;
+    height: auto;
+}
+#img-figure{
+    width: 130px;
+    margin: 0 auto;
+    margin-top:40px;
+}
+#introduction p{
+    font-size: 14px;
+}
+.content-box{
+    margin-top: 20px;
+    height: auto;
+}
+#blogCard .card-header{
+    background-color: rgb(85, 228, 85);
+}
+#codingCard .card-header{
+    background-color: black;
+}
+#photographyCard .card-header{
+    background-color: rgb(0, 183, 255)
+}
+#codingCard .card-header{
+    padding-left: 40px;
+}
