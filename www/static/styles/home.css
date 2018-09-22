@@ -14,6 +14,12 @@
 }
 #introduction p{
     font-size: 14px;
+    opacity: 0;
+    transition: all;
+    transition-duration: 0.5s;
+}
+.show{
+    opacity: 1;
 }
 .content-box{
     margin-top: 20px;
@@ -30,4 +36,22 @@
 }
 #codingCard .card-header{
     padding-left: 40px;
+}
+#svg-blog{
+    height: 160px;
+}
+#svg-camera{
+    height: 150px;
+}
+#blogCard:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 255, 0, 0.2),0 6px 20px 0 rgba(
+        0, 255, 0, 0.19);
+}
+#codingCard:hover{
+    box-shadow: 0 4px 8px 0 rgba(255, 0, 157, 0.2),0 6px 20px 0 rgba(
+        255, 0, 157, 0.19);
+}
+#photographyCard:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 183, 255, 0.2),0 6px 20px 0 rgba(
+        0, 183, 255, 0.19);
 }
