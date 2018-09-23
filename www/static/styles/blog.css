@@ -1,0 +1,18 @@
+.banner{
+    margin-top:30px;
+}
+.content-box{
+    margin: 0 auto;
+    margin-bottom: 95px; 
+}
+.card-across{
+    opacity: 0;
+    transform: translateY(-50px);
+    cursor: pointer;
+}
+.card-across:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 174, 255, 0.2),0 6px 20px 0 rgba(
+        0, 174, 255, 0.19);
+    -webkit-transform: scale(1.1,1.1);
+    transform: scale(1.1,1.1);
+}

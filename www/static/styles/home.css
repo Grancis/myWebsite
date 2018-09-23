@@ -18,8 +18,9 @@
     transition: all;
     transition-duration: 0.5s;
 }
-.show{
-    opacity: 1;
+.card{
+    opacity: 0;
+    transform: translateY(-50px);
 }
 .content-box{
     margin-top: 20px;

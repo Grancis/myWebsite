@@ -1,0 +1,16 @@
+@keyframes scaleUp{
+    from{scale: 1;}
+    to{scale: 0.8};
+}
+
+.card-across{
+    /* border:solid 1px black; */
+    margin: 20px;
+    height: 150px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(
+        0, 0, 0, 0.19);
+    transition: all;
+    transition-duration: 0.5s;
+    
+}
+

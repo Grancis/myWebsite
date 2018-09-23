@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="./styles/card.css">
         <link rel="stylesheet" href="./styles/nav.css">
         <link rel="stylesheet" href="./styles/footer.css">
+        <link rel="stylesheet" href="./styles/coding.css">
+        <script src="./jslib/coding.js"></script>
     <body>
         <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -33,5 +35,77 @@
                     </ul>
                 </div>
             </div>
-        </nav></body>
+        </nav>
+        <div class="banner">
+            <img src="./image/banner-coding.png" class="img-responsive">
+        </div>
+            
+        <div class="container">
+            <div class="col-md-3 col-xs-6">
+                <div class="block" onclick="frontEndClick()">
+                    <div class="icon">
+                    <img src="./image/html5.svg" class="img-responsive">
+                    <div class="overView"></div>
+                </div>
+                <div class="text">Web前端</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <div class="block" onclick="pythonClick()">
+                    <div class="icon">
+                        <img src="./image/python.svg" class="img-responsive">
+                        <div class="overView"></div>
+                    </div>
+                    <div class="text">Python</div></div>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <div class="block" onclick="javaClick()">
+                    <div class="icon">
+                        <img src="./image/java.svg" class="img-responsive">
+                        <div class="overView"></div>
+                    </div>
+                    <div class="text">Java</div></div>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <div class="block" onclick="matlabClick()">
+                    <div class="icon">
+                        <img src="./image/matlab.svg" class="img-responsive">
+                        <div class="overView"></div>
+                    </div>
+                    <div class="text">matlab</div></div>
+            </div>
+        </div>
+
+        <div class="container content-box">
+            <div class="content-header">
+                <h1>最近发布:</h1>
+            </div>
+            <hr>
+            <div class="list-box">
+                <div class="list-item">
+                    <img src="./image/python.svg" class="list-icon img-responsive">
+                    <div class="list-info"><a href="#">爬虫：模拟登陆</a></div>
+                    <div class="list-date">23/09/2018</div>
+                </div>
+                <div class="list-item bkgClear">
+                    <img src="./image/matlab.svg" class="list-icon img-responsive">
+                    <div class="list-info"><a href="#">用MATLAB模拟光的衍射并生成衍射图</a></div>
+                    <div class="list-date">21/09/2018</div>
+                </div>
+                <div class="list-item">
+                    <img src="./image/html5.svg" class="list-icon img-responsive">
+                    <div class="list-info"><a href="#">CSS3：制作卡片效果</a></div>
+                    <div class="list-date">21/09/2018</div>
+                </div>
+                <div class="list-item bkgClear">
+                    <img src="./image/python.svg" class="list-icon img-responsive">
+                    <div class="list-info"><a href="#">爬虫：DOM解析经验</a></div>
+                    <div class="list-date">21/09/2018</div>
+                </div>
+            </div>
+        </div>
+    <footer>
+        @copyright: designed by Grancis
+    </footer>
+    </body>
 </html>

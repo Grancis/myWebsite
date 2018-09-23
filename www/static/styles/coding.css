@@ -1,0 +1,66 @@
+.banner{
+    margin-top: 30px;
+}
+.block{
+    margin-top:40px;
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: all;
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+.icon{
+    transition: transform;
+    transition-duration: 0.5s;
+}
+.icon img{
+    width: 40%;
+    margin: 0 auto;
+}
+.block .text{
+    text-align: center;
+    font-size: 24px;
+    padding: 6px;
+}
+.block:hover .icon{
+    transform: scale(1.2,1.2)
+}
+.bkgClear{
+    background: white;
+}
+.content-box{
+    opacity: 0;
+    background-color:#F7F7F7;
+    margin-top:40px;
+    margin-bottom: 20px;
+    transition: opacity;
+    transition-duration: 0.5s;
+    border-bottom: solid 1px #F7F7F7;
+}
+.content-header h1{
+    font-size: 24px;
+}
+.list-item{
+    display: block;
+    padding-bottom: 8px;
+    border-radius: 10px;
+}
+.list-icon{
+    float: left;
+    width: 25px;
+}
+.list-info{
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 18px;
+}
+.list-date{
+    float: right;
+    padding-right: 6px;
+    overflow: hidden;
+}
+@media screen and (max-width:445px){
+    .list-date{
+        display: none;
+    }
+}
