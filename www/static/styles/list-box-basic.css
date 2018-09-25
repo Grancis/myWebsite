@@ -1,0 +1,53 @@
+.bkgClear{
+    background: white;
+}
+.content-box{
+    opacity: 0;
+    background-color:#F7F7F7;
+    margin-top:40px;
+    margin-bottom: 20px;
+    transition: opacity;
+    transition-duration: 0.5s;
+    border-bottom: solid 1px #F7F7F7;
+}
+.content-header h1{
+    font-size: 24px;
+}
+.list-item{
+    display: block;
+    padding-top:8px;
+    padding-bottom: 8px;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-radius: 10px;
+    overflow: visible;
+}
+.list-icon{
+    float: left;
+    width: 25px;
+}
+.list-info{
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 18px;
+}
+.list-date{
+    float: right;
+    padding-right: 6px;
+    overflow: hidden;
+}
+.content-box hr{
+    height: 1px;
+    border: none;
+    background-color: lightblue;
+}
+.content-box{
+    border: solid 1px lightblue;
+    border-radius: 18px;
+    padding-bottom: 8px;
+}
+@media screen and (max-width:970px){
+    .content-box{
+        width: 96%;
+    }
+}

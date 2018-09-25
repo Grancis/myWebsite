@@ -1,3 +1,66 @@
 .banner{
     margin-top:30px;
 }
+
+.video-card .card-content h1{
+    font-size: 24px;
+    cursor: pointer;
+}
+.video-card .card-content h1:hover{
+    color: blue;
+}
+.video-card .card-content p{
+    display: inline;
+}
+
+.video-card{
+    border: solid 1px #79797963;
+    border-radius: 8px;
+    opacity: 0;
+    transition: box-shadow opacity;
+    transition-duration: 0.5s;
+}
+.video-card:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 174, 255, 0.2),0 6px 20px 0 rgba(
+        0, 174, 255, 0.19);
+}
+.video-card .card-header{
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    position: relative;
+}
+
+.video-card .card-header .overView{
+    position: absolute;
+    top:10px;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity;
+    transition-duration: 0.25s;
+}
+.video-card .card-header .overView:hover{
+    opacity: 1;
+}
+#hidden-content{
+    display: none;
+}
+#card-content-switch{
+    cursor: pointer;
+}
+.red-label{
+    border-left: solid 10px red;
+    border: red；
+}
+
+@media screen and (max-width:997px){
+    .video-card{
+        overflow: hidden;
+    }
+    #hidden-content{
+        display: none;
+    }
+    .banner{
+        margin-top: 50px;
+    }
+}

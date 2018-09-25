@@ -25,42 +25,16 @@
 .block:hover .icon{
     transform: scale(1.2,1.2)
 }
-.bkgClear{
-    background: white;
-}
-.content-box{
-    opacity: 0;
-    background-color:#F7F7F7;
-    margin-top:40px;
-    margin-bottom: 20px;
-    transition: opacity;
-    transition-duration: 0.5s;
-    border-bottom: solid 1px #F7F7F7;
-}
-.content-header h1{
-    font-size: 24px;
-}
-.list-item{
-    display: block;
-    padding-bottom: 8px;
-    border-radius: 10px;
-}
-.list-icon{
-    float: left;
-    width: 25px;
-}
-.list-info{
-    display: inline-block;
-    margin-left: 8px;
-    font-size: 18px;
-}
-.list-date{
-    float: right;
-    padding-right: 6px;
-    overflow: hidden;
-}
+
 @media screen and (max-width:445px){
     .list-date{
         display: none;
+    }
+    .banner{
+        margin-top: 50px;
+    }
+    #icon-box{
+        margin-top: -20px;
+        margin-bottom: -20px;
     }
 }

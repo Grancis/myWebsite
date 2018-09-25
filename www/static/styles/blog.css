@@ -16,3 +16,11 @@
     -webkit-transform: scale(1.1,1.1);
     transform: scale(1.1,1.1);
 }
+@media screen and (max-width:970px){
+    .banner{
+        margin-top: 50px;
+    }
+    #news{
+        margin-top:2px;
+    }
+}
