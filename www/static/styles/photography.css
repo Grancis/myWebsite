@@ -12,9 +12,11 @@
 .video-card .card-content p{
     display: inline;
 }
-
+.video-header h1{
+    font-size: 24px;
+}
 .video-card{
-    border: solid 1px #79797963;
+    /*   */
     border-radius: 8px;
     opacity: 0;
     transition: box-shadow opacity;
@@ -24,13 +26,19 @@
     box-shadow: 0 4px 8px 0 rgba(0, 174, 255, 0.2),0 6px 20px 0 rgba(
         0, 174, 255, 0.19);
 }
+.video-card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(
+        0, 0, 0, 0.19);
+}
 .video-card .card-header{
     padding: 10px;
-    margin-bottom: 10px;
+    clear: both;
     margin-top: 10px;
     position: relative;
 }
-
+.video-card .card-content{
+    float: none;
+}
 .video-card .card-header .overView{
     position: absolute;
     top:10px;

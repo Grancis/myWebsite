@@ -3,7 +3,7 @@ $(document).ready(function(){
     content=$(".content-box")[0];
     i=0;
     setTimeout(showBlock,300);
-    setTimeout(showContent,1500);
+    setTimeout(showContent,500);
 })
 
 function showBlock(){
