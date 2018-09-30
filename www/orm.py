@@ -16,12 +16,12 @@ def log(sql,args=()):
 async def create_pool(loop,**kw):
     logging.info('creating mysql connection pool...')
     global __pool
-    pool= await aiomysql.create_pool(
+    __pool= await aiomysql.create_pool(
         host=kw.get('host','localhost'),
-        port=kw.get('port','3306'),
+        port=kw.get('port',3306),
         user=kw['user'],
         password=kw['password'],
-        db=['db'],
+        db=kw['db'],
         charset=kw.get('charset','utf8'),
         autocommit=kw.get('autocommit',True),
         maxsize=kw.get('maxsize',10),
@@ -30,7 +30,7 @@ async def create_pool(loop,**kw):
     )
 
 #异步select语句，使用SQL参数格式，函数内转换我Mysql格式
-async def select(sql,args,size=none):
+async def select(sql,args,size=None):
     log(sql,args)
     global __pool
     #从pool中异步获取一个连接
@@ -46,18 +46,18 @@ async def select(sql,args,size=none):
             return rs
 
 #异步execute, insert delete 都为execute
-async def execute(sql,args,autocommit=True):
-    log(sql,args)
+async def execute(sql, args, autocommit=True):
+    log(sql)
     global __pool
     async with __pool.get() as conn:
         if not autocommit:
             await conn.begin()
         try:
             async with conn.cursor(aiomysql.DictCursor) as cur:
-                await cur.execute(sql.replace('?','%s'), args or ())
-                affected=cur.rowcount
-                if not autocommit:
-                    await cur.commit()
+                await cur.execute(sql.replace('?', '%s'), args)
+                affected = cur.rowcount
+            if not autocommit:
+                await conn.commit()
         except BaseException as e:
             if not autocommit:
                 await conn.rollback()
@@ -81,7 +81,7 @@ class Field(object):
         self.primary_key=primary_key
         self.default=default
     def __str__(self):
-        return ('%s,%s,%s', self.__class__.__name__,self.column_type,self.name)
+        return ('%s,%s,%s' %(self.__class__.__name__,self.column_type,self.name))
 
 #继承Field类得到各个Field
 class StringField(Field):
@@ -108,7 +108,7 @@ class TextField(Field):
 class ModelMetaclass(type):
     def __new__(cls,name,bases,attrs):
         #排除Model类本身
-        if (name=='Model'):
+        if name=='Model':
             return type.__new__(cls,name,bases,attrs)
         else:
             #先拿到table的name
@@ -120,7 +120,8 @@ class ModelMetaclass(type):
             primaryKey=None
             for k,v in attrs.items():
                 if isinstance(v,Field) :
-                    logging.info('found mapping %s==>%s' %(k,v))
+                    logging.info('found mapping:  %s==>%s ' %(k,v))
+                    mappings[k]=v
                     #寻找主键，不是主键的appen到fields中
                     if v.primary_key:
                         #找到主键
@@ -143,101 +144,102 @@ class ModelMetaclass(type):
             #构造默认的SELECT INSERT UPDATE和DELETE语句
             attrs['__select__']='SELECT `%s`, %s FROM `%s`' %(primaryKey,','.join(escaped_fields),table_name)
             attrs['__insert__']='INSERT INTO `%s` (%s, `%s`) VALUES (%s)' %(table_name,','.join(escaped_fields),primaryKey,create_args_string(len(escaped_fields)+1))
-            attrs['__update__']='UPDATE `%s` SET %s WHERE `%s`=?' %(table_name, ','.join(lambda f:'`%s=?' %(mappings.get(f).name or f),fields),primaryKey)
+            attrs['__update__']='UPDATE `%s` SET %s WHERE `%s`=?' %(table_name, ','.join(map(lambda f:'`%s=?' %(mappings.get(f).name or f),fields)),primaryKey)
             attrs['__delete__']='DELETE FROM `%s` WHERE `%s`=?' %(table_name,primaryKey)
             return type.__new__(cls,name,bases,attrs)
 
 
 #定义Model类，所有类都需要有的操作
-class Model(dict,metaClass=ModelMetaclass):
-    
-    def __init__(self,**kw):
-        super(Model,self).__init__(**kw)
-    
-    def __getattr__(self,key):
+class Model(dict, metaclass=ModelMetaclass):
+
+    def __init__(self, **kw):
+        super(Model, self).__init__(**kw)
+
+    def __getattr__(self, key):
         try:
-            return self['key']
+            return self[key]
         except KeyError:
-            raise AttributeError(r"'Modle' object has no attribute '%s'" %key)
-    
-    def __setattr__(self,key,value):
-        self[key]=value
-    
-    def getValue(self,key):
-        return getattr(self,key,None)
-    
-    def getValueOrDefault(self,key):
-        value=getattr(self,key,None)
+            raise AttributeError(r"'Model' object has no attribute '%s'" % key)
+
+    def __setattr__(self, key, value):
+        self[key] = value
+
+    def getValue(self, key):
+        return getattr(self, key, None)
+
+    def getValueOrDefault(self, key):
+        value = getattr(self, key, None)
         if value is None:
-            field=self.__mappings__(key)
+            field = self.__mappings__[key]
             if field.default is not None:
-                value=field.default() if callable(filed.default) else field.default
-                logging.debug('using default value for %s:%s' %(key,value))
-                setattr(self,key,value)
+                value = field.default() if callable(field.default) else field.default
+                logging.debug('using default value for %s: %s' % (key, str(value)))
+                setattr(self, key, value)
         return value
-    
+
     @classmethod
     async def findAll(cls, where=None, args=None, **kw):
-        sql=[cls.__select__]
+        ' find objects by where clause. '
+        sql = [cls.__select__]
         if where:
             sql.append('where')
             sql.append(where)
         if args is None:
-            args=[]
-        orderBy=kw.get('orderBy',None)
+            args = []
+        orderBy = kw.get('orderBy', None)
         if orderBy:
             sql.append('order by')
             sql.append(orderBy)
-        limit=kw.get('limit',None)
+        limit = kw.get('limit', None)
         if limit is not None:
             sql.append('limit')
-            if isinstance(limit,int):
+            if isinstance(limit, int):
                 sql.append('?')
                 args.append(limit)
-            elif isinstance(limit,tuple) and len(limit)==2:
-                sql.append('?,?')
-                args.append(limit)
+            elif isinstance(limit, tuple) and len(limit) == 2:
+                sql.append('?, ?')
+                args.extend(limit)
             else:
-                raise ValueError('Invalide limit value: %s' % str(limit))
-        rs= await select(' '.join(sql),args)
+                raise ValueError('Invalid limit value: %s' % str(limit))
+        rs = await select(' '.join(sql), args)
         return [cls(**r) for r in rs]
 
     @classmethod
-    async def findNumber(cls, selectField, where=None, argr=None):
-        sql=['select %s _num_ from `%s`' %(selectField,cls.__table__)]
+    async def findNumber(cls, selectField, where=None, args=None):
+        ' find number by select and where. '
+        sql = ['select %s _num_ from `%s`' % (selectField, cls.__table__)]
         if where:
             sql.append('where')
             sql.append(where)
-        rs= await execute(' '.join(sql),args,1)
-        if len(rs)==0:
+        rs = await select(' '.join(sql), args, 1)
+        if len(rs) == 0:
             return None
         return rs[0]['_num_']
 
     @classmethod
-    async def find(cls,pk):
-        #find object by primary key
-        rs= await select('%s where `%s`=?' %(cls.__select__,cls.__primary_key),[pk],1)
-        if len(rs)==0:
+    async def find(cls, pk):
+        ' find object by primary key. '
+        rs = await select('%s where `%s`=?' % (cls.__select__, cls.__primary_key__), [pk], 1)
+        if len(rs) == 0:
             return None
         return cls(**rs[0])
 
     async def save(self):
-        args=list(map(self.getValueOrDefault,self.__fields__))
+        args = list(map(self.getValueOrDefault, self.__fields__))
         args.append(self.getValueOrDefault(self.__primary_key__))
-        rows= await execute(self.__insert__,args)
-        if rows !=1:
-            logging.warn('failed to insert record: affected rows:%s' %rows)
+        rows = await execute(self.__insert__, args)
+        if rows != 1:
+            logging.warn('failed to insert record: affected rows: %s' % rows)
 
     async def update(self):
-        args=list(map(self.getValue,self.__fields__))
+        args = list(map(self.getValue, self.__fields__))
         args.append(self.getValue(self.__primary_key__))
-        rows= await execute(self.__update__,args)
-        if rows!=1:
-            logging.warn('failed to update by primary key: affected rows:%s' %rows)
+        rows = await execute(self.__update__, args)
+        if rows != 1:
+            logging.warn('failed to update by primary key: affected rows: %s' % rows)
 
     async def remove(self):
-        args=[self.getValue(self.__primary_key__)]
-        rows= await execute(self.__delete__,args)
-        if rows !=1:
-            logging.warn('failed to remove by primary key: affected rows: %s' %rows)
-
+        args = [self.getValue(self.__primary_key__)]
+        rows = await execute(self.__delete__, args)
+        if rows != 1:
+            logging.warn('failed to remove by primary key: affected rows: %s' % rows)
