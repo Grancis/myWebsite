@@ -5,7 +5,7 @@ __author__='refer to Michael Liao'
 #啊啊啊 看不懂啊
 #RequestHandler的部分很难懂 web的请求掌握得不好
 
-import aiohttp, os, inspect, logging, functools
+import aiohttp, os, inspect, logging, functools,asyncio
 
 from urllib import parse
 from aiohttp import web
@@ -16,8 +16,8 @@ from apis import APIError
 def get(path):
     def decorator(func):
         @functools.wraps(func)
-        def wrapper(*agrs,**kw):
-            return func
+        def wrapper(*args,**kw):
+            return func(*args,**kw)
         wrapper.__method__='GET'
         wrapper.__route__=path
         return wrapper
@@ -29,7 +29,7 @@ def post(path):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args,**kw):
-            return func
+            return func(*args,**kw)
         wrapper.__method__='POST'
         wrapper.__route__=path
         return wrapper
@@ -59,9 +59,9 @@ def get_named_kw_args(fn):
     return tuple(args)
 
 #判断是否有命名关键字参数
-def has_named_kw_arg(fn):
-    params=inspect.signature(fn),parameters
-    for name,param in params.item():
+def has_named_kw_args(fn):
+    params=inspect.signature(fn).parameters
+    for name,param in params.items():
         if param.kind==inspect.Parameter.KEYWORD_ONLY:
             return True
 
@@ -95,7 +95,7 @@ class RequestHandler(object):
         #判定视图函数具有的参数类型
         self._has_request_arg=has_request_arg(fn)
         self._has_var_kw_arg=has_var_kw_arg(fn)
-        self._has_named_kw_arg=has_named_kw_arg(fn)
+        self._has_named_kw_args=has_named_kw_args(fn)
         self._name_kw_args=get_named_kw_args(fn)
         self._required_kw_args=get_required_kw_args(fn)
 
