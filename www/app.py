@@ -80,13 +80,14 @@ async def response_factory(app, handler):
             logging.info('content-type=text/html')
             return resp
         if isinstance(r, dict):
-            template = r.get('__template__')
+            template = r.get('__template__',None)
             if template is None:
                 resp = web.Response(body=json.dumps(r, ensure_ascii=False, default=lambda o: o.__dict__).encode('utf-8'))
                 resp.content_type = 'application/json;charset=utf-8'
                 logging.info('json...')
                 return resp
             else:
+                logging.info('template...')
                 resp = web.Response(body=app['__templating__'].get_template(template).render(**r).encode('utf-8'))
                 resp.content_type = 'text/html;charset=utf-8'
                 logging.info('template...')

@@ -178,7 +178,7 @@ class Model(dict, metaclass=ModelMetaclass):
         return value
 
     @classmethod
-    async def findAll(cls, where=None, args=None, **kw):
+    async def findAllOrMany(cls, where=None, args=None,size=None,**kw):
         ' find objects by where clause. '
         sql = [cls.__select__]
         if where:
@@ -201,6 +201,32 @@ class Model(dict, metaclass=ModelMetaclass):
                 args.extend(limit)
             else:
                 raise ValueError('Invalid limit value: %s' % str(limit))
+        rs = await select(' '.join(sql), args,size=size)
+        return [cls(**r) for r in rs]
+    
+    @classmethod
+    async def findColumn(cls,col,where=None,args=None,size=None,**kw):
+        sql=['SELECT %s FROM `%s`' %(','.join(col), cls.__table__)]
+        limit=kw.get('limit',None)
+        if args is None:
+            args=[]
+        if where is not None:
+            sql.append('where')
+            sql.append(where)
+        orderBy = kw.get('orderBy', None)
+        if orderBy:
+            sql.append('order by')
+            sql.append(orderBy)
+        if limit is not None:
+            sql.append('limit')
+            if isinstance(limit,int):
+                sql.append('?')
+                args.append(limit)
+            elif isinstance(limit,tuple) and len(limit) == 2:
+                sql.append('?,?')
+                args.extend(limit)
+            else:
+                raise ValueError('Invalide limit value：%s' %str(limit))
         rs = await select(' '.join(sql), args)
         return [cls(**r) for r in rs]
 
