@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+        <title>Grancis' Personal Website</title>
+        <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href='http://cdn.webfont.youziku.com/webfonts/nomal/123488/45803/5ba675f1f629d80b5c293dc3.css' rel='stylesheet' type='text/css' />
+        <link href='http://cdn.webfont.youziku.com/webfonts/nomal/123488/45803/5ba67781f629d80b5c293dc4.css' rel='stylesheet' type='text/css' />
+        <link href='http://cdn.webfont.youziku.com/webfonts/nomal/123488/45803/5ba67b42f629d80b5c293dc6.css' rel='stylesheet' type='text/css' />
+        <link href='http://cdn.webfont.youziku.com/webfonts/nomal/123488/45803/5ba67baff629d80b5c293dc7.css' rel='stylesheet' type='text/css' />
+        <link rel="stylesheet" href="../static/styles/card.css">
+        <link rel="stylesheet" href="../static/styles/nav.css">
+        <link rel="stylesheet" href="../static/styles/footer.css">
+        <link rel="stylesheet" href="../static/styles/card-across.css">
+        <link rel="stylesheet" href="../static/styles/banner.css">
+        <link rel="stylesheet" href="../static/styles/blog.css">
+        <script src="../static/jslib/blog.js"></script>
+    <body>
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
+                        <span class="sr-only">切换导航</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand "><embed id="brand" class="img-responsive" src="../static/image/Grancis.svg" type="image/svg+xml" /></a>
+                </div>
+    
+                <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                        <li class="active"><a href="/blog">Thinking Series</a></li>
+                        <li><a href="/coding">Coding&Explore</a></li>
+                        <li><a href="/photography">Photography</a></li>
+                        <li><a href="/about">About&GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="banner">
+            <img src="../static/image/assassinator-567.png" class="img-responsive">
+        </div>
+
+        <div class="container">
+            <div class="content-box">
+                <div class="row">
+                    <div class="col-md-5 col-md-offset-1" >
+                        <div class="card-across" id="booking" onclick="bookingClick()">
+                            <div class="card-header col-xs-3"><img src="../static/image/book.svg" class="img-responsive"></div>
+                            <div class="card-content col-xs-9">
+                                <h1 class="css14a765ff1f1e260">读书有感</h1>
+                                <p>啥书都看，东野圭吾的推理小说太好看了，最近开始涉猎非推理类的书籍，史书似乎也很有意思</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-md-offset-1" >
+                        <div class="card-across" id="it" onclick="itClick()">
+                            <div class="card-header col-xs-3"><img src="../static/image/core.svg" class="img-responsive"></div>
+                            <div class="card-content col-xs-9">
+                                <h1 class="css14a76c19901e260">科技随笔</h1>
+                                <p>各类it新闻，Apple又发布了新的产品，然而在我看来，这次发布会只是为了捞钱，没有落在创新上，可这就是企业吧</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 col-md-offset-1" >
+                        <div class="card-across" id="news" onclick="newsClick()">
+                            <div class="card-header col-xs-3"><img src="../static/image/comment.svg" class="img-responsive"></div>
+                            <div class="card-content col-xs-9">
+                                <h1 class="css14a77ac2ad1e260">时事浅谈</h1>
+                                <p>发生了什么？“黎曼猜想”要被证明出来了，作为八大数学难题之一，那么什么是“黎曼猜想”？</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-md-offset-1" >
+                        <div class="card-across" id="thinking" onclick="thinkingClick()">
+                            <div class="card-header col-xs-3"><img src="../static/image/questionMark.svg" class="img-responsive"></div>
+                            <div class="card-content col-xs-9">
+                                <h1 class="css14a77c6dcc1e260">胡思乱想</h1>
+                                <p>《人间失格》里的主人公一定不会想到自己写了什么</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            @copyright: designed by Grancis
+        </footer>
+
+    </body>
+</html>
