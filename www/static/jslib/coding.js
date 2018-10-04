@@ -4,6 +4,8 @@ $(document).ready(function(){
     i=0;
     setTimeout(showBlock,300);
     setTimeout(showContent,500);
+
+    updateList();
 })
 
 function showBlock(){
@@ -32,3 +34,36 @@ function javaClick(){
 function matlabClick(){
     window.location.href="#";
 }
+
+function createListItem(id,subdivide,caption,date){
+    var box_div=$('<div class="list-item"></div>')
+    img_src='../static/image/'+subdivide+'.svg'
+    var img=$('<img src='+img_src+' class="list-icon img-responsive">')
+    var caption_div=$('<div class="list-info"></div>')
+    var link=$('<a href="/get_blog?id='+id+'">'+caption+'</a>')
+    var date_div=('<div class="list-date">'+date+'</div>')
+    $(caption_div).append(link);
+    $(box_div).append(img);
+    $(box_div).append(caption_div);
+    $(box_div).append(date_div);
+    return $(box_div)
+}
+
+function updateList(){
+    $.ajax({
+        type: "get",
+        url: "/api/get_coding_list",
+        // data: "data",
+        dataType: "json",
+        success: function (data){
+            list_box=$('.list-box')[0];
+            $.each(data.blogs,function(i,obj){
+                item=createListItem(obj.id,obj.subdivide,obj.caption,obj.create_at);
+                $(list_box).append(item);
+            })
+        }
+    })
+}
+
+                 
+                 

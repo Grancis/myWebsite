@@ -96,7 +96,7 @@ class RequestHandler(object):
         self._has_request_arg=has_request_arg(fn)
         self._has_var_kw_arg=has_var_kw_arg(fn)
         self._has_named_kw_args=has_named_kw_args(fn)
-        self._name_kw_args=get_named_kw_args(fn)
+        self._named_kw_args=get_named_kw_args(fn)
         self._required_kw_args=get_required_kw_args(fn)
 
     #提取request中的参数，若Handler有关键字函数、命名关键字函数则需要查询request中是否提供了相应的参数，无则报错
