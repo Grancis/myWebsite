@@ -39,7 +39,7 @@ function login(){
                 window.location.href=history_href
             }
         },
-        error: function(){alert("请重试");}
+        error: function(){alert("请重试或联系管理员");}
     })
 }
 
@@ -80,7 +80,8 @@ function register(){
                     alert("注册成功，确认后跳转至原页面");
                     window.location.href=history_href
                 }
-            }
+            },
+            error: function(){alert("请重试或联系管理员")}
         })
     }
 
