@@ -1,114 +1,100 @@
-<!DOCTYPE html>
-<html>
-    <head>        
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-        <title>Grancis' Personal Website</title>
-        <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="../static/styles/card.css">
-        <link rel="stylesheet" href="../static/styles/nav.css">
-        <link rel="stylesheet" href="../static/styles/footer.css">
-        <link rel="stylesheet" href="../static/styles/banner.css">
-        <link rel="stylesheet" href="../static/styles/list-box-basic.css">
-        <link rel="stylesheet" href="../static/styles/coding.css">
-        <script src="../static/jslib/coding.js"></script>
-    <body>
-        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
-                        <span class="sr-only">切换导航</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand"><embed id="brand" src="../static/image/Grancis.svg" type="image/svg+xml" /></a>
-                </div>
-    
-                <div class="collapse navbar-collapse" id="example-navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/blog">Thinking Series</a></li>
-                        <li class="active"><a href="/coding">Coding&Explore</a></li>
-                        <li><a href="/photography">Photography</a></li>
-                        <li><a href="/about">About&GitHub</a></li>
-                        <li><a id="user" href="/login_or_signin">/*Login*/</a></li>
-                    </ul>
-                </div>
+{% extends "__base__.html" %}
+{% block head %}
+    {{super()}}
+    <link rel="stylesheet" href="../static/styles/card.css">
+    <link rel="stylesheet" href="../static/styles/list-box-basic.css">
+    <link rel="stylesheet" href="../static/styles/pagination.css">
+    <link rel="stylesheet" href="../static/styles/coding.css">
+    <script src="../static/jslib/pagination.js"></script>
+    <script src="../static/jslib/coding.js"></script>
+{% endblock %}
+
+{% block nav_list %}
+    <li><a href="/">Home</a></li>
+    <li><a href="/blog">Thinking Series</a></li>
+    <li class="active"><a href="/coding">Coding&Explore</a></li>
+    <li><a href="/photography">Photography</a></li>
+    <li><a href="/about">About&GitHub</a></li>
+    <li><a id="user" href={{href}}>{{name}}</a></li>
+{% endblock %}
+
+{% block banner %}
+    <img src="../static/image/banner-coding.png" class="img-responsive" >
+{% endblock %}
+
+
+{% block container%}
+<div class="container" id="icon-box">
+        <div class="col-md-3 col-xs-6">
+            <div class="block" onclick="frontEndClick()">
+                <div class="icon">
+                <img src="../static/image/html5.svg" class="img-responsive">
+                <div class="overView"></div>
             </div>
-        </nav>
-        <div class="banner">
-            <img src="../static/image/banner-coding.png" class="img-responsive">
+            <div class="text">Web前端</div>
+            </div>
         </div>
-            
-        <div class="container" id="icon-box">
-            <div class="col-md-3 col-xs-6">
-                <div class="block" onclick="frontEndClick()">
-                    <div class="icon">
-                    <img src="../static/image/html5.svg" class="img-responsive">
+        <div class="col-md-3 col-xs-6">
+            <div class="block" onclick="pythonClick()">
+                <div class="icon">
+                    <img src="../static/image/python.svg" class="img-responsive">
                     <div class="overView"></div>
                 </div>
-                <div class="text">Web前端</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-xs-6">
-                <div class="block" onclick="pythonClick()">
-                    <div class="icon">
-                        <img src="../static/image/python.svg" class="img-responsive">
-                        <div class="overView"></div>
-                    </div>
-                    <div class="text">Python</div></div>
-            </div>
-            <div class="col-md-3 col-xs-6">
-                <div class="block" onclick="javaClick()">
-                    <div class="icon">
-                        <img src="../static/image/java.svg" class="img-responsive">
-                        <div class="overView"></div>
-                    </div>
-                    <div class="text">Java</div></div>
-            </div>
-            <div class="col-md-3 col-xs-6">
-                <div class="block" onclick="matlabClick()">
-                    <div class="icon">
-                        <img src="../static/image/matlab.svg" class="img-responsive">
-                        <div class="overView"></div>
-                    </div>
-                    <div class="text">matlab</div></div>
-            </div>
+                <div class="text">Python</div></div>
         </div>
+        <div class="col-md-3 col-xs-6">
+            <div class="block" onclick="javaClick()">
+                <div class="icon">
+                    <img src="../static/image/java.svg" class="img-responsive">
+                    <div class="overView"></div>
+                </div>
+                <div class="text">Java</div></div>
+        </div>
+        <div class="col-md-3 col-xs-6">
+            <div class="block" onclick="matlabClick()">
+                <div class="icon">
+                    <img src="../static/image/matlab.svg" class="img-responsive">
+                    <div class="overView"></div>
+                </div>
+                <div class="text">matlab</div></div>
+        </div>
+    </div>
 
-        <div class="container content-box">
-            <div class="content-header">
-                <h1>最近发布:</h1>
+    <div class="container content-box">
+        <div class="content-header">
+            <h1>最近发布:</h1>
+        </div>
+        <hr>
+        <div class="list-box">
+            <div class="list-item">
+                <img src="../static/image/python.svg" class="list-icon img-responsive">
+                <div class="list-info"><a href="#">爬虫：模拟登陆</a></div>
+                <div class="list-date">23/09/2018</div>
             </div>
-            <hr>
-            <div class="list-box">
-                <div class="list-item">
-                    <img src="../static/image/python.svg" class="list-icon img-responsive">
-                    <div class="list-info"><a href="#">爬虫：模拟登陆</a></div>
-                    <div class="list-date">23/09/2018</div>
-                </div>
-                <div class="list-item bkgClear">
-                    <img src="../static/image/matlab.svg" class="list-icon img-responsive">
-                    <div class="list-info"><a href="#">用MATLAB模拟光的衍射并生成衍射图</a></div>
-                    <div class="list-date">21/09/2018</div>
-                </div>
-                <div class="list-item">
-                    <img src="../static/image/html5.svg" class="list-icon img-responsive">
-                    <div class="list-info"><a href="#">CSS3：制作卡片效果</a></div>
-                    <div class="list-date">21/09/2018</div>
-                </div>
-                <div class="list-item bkgClear">
-                    <img src="../static/image/python.svg" class="list-icon img-responsive">
-                    <div class="list-info"><a href="#">爬虫：DOM解析经验</a></div>
-                    <div class="list-date">21/09/2018</div>
-                </div>
+            <div class="list-item bkgClear">
+                <img src="../static/image/matlab.svg" class="list-icon img-responsive">
+                <div class="list-info"><a href="#">用MATLAB模拟光的衍射并生成衍射图</a></div>
+                <div class="list-date">21/09/2018</div>
+            </div>
+            <div class="list-item">
+                <img src="../static/image/html5.svg" class="list-icon img-responsive">
+                <div class="list-info"><a href="#">CSS3：制作卡片效果</a></div>
+                <div class="list-date">21/09/2018</div>
+            </div>
+            <div class="list-item bkgClear">
+                <img src="../static/image/python.svg" class="list-icon img-responsive">
+                <div class="list-info"><a href="#">爬虫：DOM解析经验</a></div>
+                <div class="list-date">21/09/2018</div>
             </div>
         </div>
-    <footer>
-        @copyright: designed by Grancis
-    </footer>
-    </body>
-</html>
+    </div>
+    <div class="col-md-4 col-md-offset-4">
+        <div class="center-box">
+        <ul class="pagination">
+            <li><a href="javascript:prePage('coding')" class="left-end">«</a></li>
+            <li><a href="#" class="active-page" id="page">1</a></li>
+            <li><a href="javascript:nextPage('coding')" class="right-end">»</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
