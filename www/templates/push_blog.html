@@ -1,13 +1,54 @@
 {% extends "__base__.html" %}
+{% block head %}
+    {{super()}}
+    <link rel="stylesheet" href="../static/styles/push_blog.css">
+    <script src="../static/jslib/push_blog.js"></script>
+{% endblock %}
+
+{% block nav_list %}
+    <li><a href="/">Home</a></li>
+    <li><a href="/blog">Thinking Series</a></li>
+    <li><a href="/coding">Coding&Explore</a></li>
+    <li><a href="/photography">Photography</a></li>
+    <li><a href="/about">About&GitHub</a></li>
+    <li><a id="user" href={{href}}>{{name}}</a></li>
+{% endblock %}
+
 {% block container %}
-    <div class="container">
+    <div class="container all-box">
         <div class="col-xs-12" id="form-box">
             <form id="blog-form" role="form">
                 <div class="form-group">
                     <label for="caption">标题：</label>
+                    <input type="text" class="form-control" name="caption" id="caption">
                 </div>
-                <input type="text" class="form-control" name="caption">
+                
+                <div class="form-group">
+                    <label for="summary">摘要：</label>
+                    <textarea class="form-control" rows="3" name="summary" id="summary"></textarea> 
+                </div>
+
+                <div class="form-group">
+                    <label for="content">正文：</label>
+                    <textarea class="form-control" name="content" rows="17" id="content"></textarea>
+                </div>
             </form>
+
+            <form id="select-form" role="form">
+                <div class="col-md-3 col-xs-6">
+                    <div class="form-group">
+                        <label for="belong_to">大分类</label>
+                        <select class="form-control" name="belong_to" id="belong_to">
+                            <option>essay</option>
+                            <option>coding</option>
+                            <option>photography</option>
+                        </select>
+                    </div>
+                </div>
+
+                
+            </form>
+            <button class="btn btn-info col-md-4 col-md-offset-4 col-xs-12" onclick="push_blog()">上传</button>
         </div>
     </div>
 {% endblock %}

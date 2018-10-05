@@ -36,7 +36,9 @@ function login(){
         success: function(rs){
             if(rs.email==email){
                 // alert("注册成功，确认后跳转至原页面");
-                window.location.href=history_href
+                //无历史则跳转index
+                if(history){window.location.href=history_href}
+                else{window.location.href="/"}
             }
         },
         error: function(){alert("请重试或联系管理员");}
@@ -50,9 +52,9 @@ function register(){
     // e_passwrd = $("#r-passwrd");
     // e_com_passwrd = $("#r-com-passwrd");
     e_error=$('#r-form-error');
-    email=$("input[name='email']").val();
-    passwrd=$("input[name='passwrd']").val();
-    com_passwrd=$("input[name='com-passwrd']").val();
+    email=$("input[name='r-email']").val();
+    passwrd=$("input[name='r-passwrd']").val();
+    com_passwrd=$("input[name='r-com-passwrd']").val();
     if(!validateEmail(email)){
         error+="邮箱格式错误";
     }

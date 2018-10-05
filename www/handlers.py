@@ -65,53 +65,98 @@ async def login_or_signin():
         
     }
 
-@get('/')
-async def index(request):
+def set_user(request):
     if request.__user__ is not None:
         name=request.__user__.name
         a_link_to='/user_page'
     else:
         name='/*login*/'
         a_link_to='/login_or_signin'
+    return (name,a_link_to)
+
+@get('/')
+async def index(request):
+    name,a_link_to=set_user(request)
     return{
         '__template__' : 'index.html',
         'name' : name,
         'href' : a_link_to
     }
 
+
 @get('/blog')
-async def blog_page():
+async def blog_page(request):
+    name,a_link_to=set_user(request)
     return{
-        '__template__':'blog.html'
+        '__template__':'blog.html',
+        'name' : name,
+        'href' : a_link_to
     }
 
 @get('/coding')
-async def coding_page():
+async def coding_page(request):
+    name,a_link_to=set_user(request)
     return{
-        '__template__':'Coding.html'
+        '__template__':'Coding.html',
+        'name' : name,
+        'href' : a_link_to
     }
 
 @get('/photography')
-async def photography_page():
+async def photography_page(request):
+    name,a_link_to=set_user(request)
     return{
-        '__template__':'photography.html'
+        '__template__':'photography.html',
+        'name' : name,
+        'href' : a_link_to
     }
 
 @get('/about')
-async def about_page():
+async def about_page(request):
+    name,a_link_to=set_user(request)
     return{
-        '__template__':'about.html'
+        '__template__':'about.html',
+        'name' : name,
+        'href' : a_link_to
     }
 
-@get('/api/get_coding_list')
-async def get_coding_list(limit='7'):
-    limit=int(limit)
-    blogs= await Blog.findColumn(("`id`,`caption`","`summary`","`belong_to`","`subdivide`","`create_at`"), where = "`belong_to`='coding'", orderBy='create_at desc',limit = limit)
+@get('/user_page')
+async def user_page(request):
+    if request.__user__ is not None:
+        user=request.__user__
+        user.create_at=datetime_filter(user.create_at)
+    else:
+        user=User(name='未登录',email="未登录",passwrd="******")
+    return{
+        '__template__':'user_page.html',
+        'user':user
+    }
+
+@get('/manage/push_blog_page')
+async def push_blog_page(request):
+    name,a_link_to=set_user(request)
+    return{
+        '__template__':'push_blog.html',
+        'name' : name,
+        'href' : a_link_to
+    }
+
+@post('/api/get_blog_list')
+async def get_coding_list(*,belong_to,page,num):
+    page=int(page)
+    num=int(num)
+    cnt= await Blog.findNumber('count(id)',where="belong_to='"+belong_to+"'")
+    page_max=cnt//num +1
+    if page>page_max:
+        page=page_max
+    top=(page-1)*num
+    limit=(int(top),int(num))
+    blogs= await Blog.findColumn(("`id`,`caption`","`summary`","`belong_to`","`subdivide`","`summary`","`create_at`"), where = "`belong_to`='coding'", orderBy='create_at desc',limit = limit)
     for d in blogs:
         for k,v in d.items():
             if k=='create_at':
                 d[k]=datetime_filter(v)
-    return dict(blogs=blogs)
+    return dict(blogs=blogs,max_page=page_max,page=page)
 
 # @get('/api/users')
 # async def api_get_users():
@@ -181,3 +226,32 @@ async def register_user(*,email,name,passwrd):
     r.content_type='application/json'
     r.body = json.dumps(user,ensure_ascii=False).encode('utf-8')
     return r
+
+
+@post('/manage/api/push_blog')
+async def push_blog(request,*,caption,summary,content,belong_to,subdivide):
+    if not caption or not caption.strip():
+        raise APIError('caption')
+    if not summary or not summary.strip():
+        raise APIError('summary')
+    if not content or not content.strip():
+        raise APIError('content')
+    if not belong_to or not belong_to.strip():
+        raise APIError('belong_to')
+    if not subdivide or not subdivide.strip():
+        raise APIError('subdivide')
+    user=None
+    if request.__user__ is not None:
+        user=request.__user__
+    else:
+        raise APIError('user')
+    blog=Blog(caption=caption,summary=summary,content=content,belong_to=belong_to,subdivide=subdivide,user_id=user.id,user_name=user.name,user_image=user.image)
+    affected = await blog.save()
+    if affected != 1:
+        error='affected rows : %s' %affected
+    else:
+        error='none'
+    blog.content='*****'
+    blog.create_at=datetime_filter(blog.create_at)
+    return dict(blog=blog,error=error)
+

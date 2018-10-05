@@ -256,6 +256,7 @@ class Model(dict, metaclass=ModelMetaclass):
         rows = await execute(self.__insert__, args)
         if rows != 1:
             logging.warn('failed to insert record: affected rows: %s' % rows)
+        return rows
 
     async def update(self):
         args = list(map(self.getValue, self.__fields__))
