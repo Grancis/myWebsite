@@ -1,0 +1,77 @@
+{% extends "__base__.html" %}
+{% block head %}
+    {{super()}}
+    <link rel="stylesheet" href="../static/styles/pagination.css">
+    <link rel="stylesheet" href="../static/styles/blog_page.css">
+    <script src="../static/jslib/pagination_comment.js"></script>
+    <script src="../static/jslib/blog_page.js"></script>
+{% endblock %}
+
+{% block nav_list %}
+    <li id="nav-home"><a href="/">Home</a></li>
+    <li id="nav-blog"><a href="/blog">Thinking Series</a></li>
+    <li id="nav-coding"><a href="/coding">Coding&Explore</a></li>
+    <li id="nav-pho"><a href="/photography">Photography</a></li>
+    <li id="nav-about"><a href="/about">About&GitHub</a></li>
+    <li id="nav-user"><a id="user" href={{href}}>{{name}}</a></li>
+{% endblock %}
+
+{% block container %}
+    <div class="container" id="box-blog">
+        <div class="col-xs-12" id="box-caption">
+            <h1>{{blog.caption}}</h1>
+        </div>
+        <div id="box-info">
+            <label id="author">{{blog.user_name}}</label>
+            <label id="time">{{blog.create_at}}</label>
+        </div>
+        <div id="box-content">
+            {{blog.content}}
+        </div>
+        
+    </div>
+
+    <div id="box-add-comment" class="container">
+        <div id="box-add-comment">
+            <form role="form" id="add-comment" action="#" >
+                <div class="form-group">
+                    <label for="comment"></label>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-1 col-xs-10">
+                            <textarea class="form-control" name="comment" rows="3" placeholder="添加评论"></textarea>
+                        </div>
+                        <button class="btn btn-info" onclick="addComment()">发送</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <input type="hidden" name="blog_id" value={{blog.id}}>
+
+    <div id="box-comment" class="container">
+        <div class="card-comment col-md-8 col-md-offset-1 col-xs-12">
+            <div id="card-name">
+                <label id="name">Grancis</label>
+            </div>
+            <div id="card-content">
+                <p id="card-content-p">comment_test....</p>
+                <br>
+            </div>
+            <div id="card-date">
+                <label id="date">1天前</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-md-offset-4">
+        <div class="center-box">
+        <ul class="pagination">
+            <li><a href="javascript:prePage()" class="left-end">«</a></li>
+            <li><a href="#" class="active-page" id="page">1</a></li>
+            <li><a href="javascript:nextPage()" class="right-end">»</a></li>
+        </ul>
+    </div>
+    </div>
+
+{% endblock %}

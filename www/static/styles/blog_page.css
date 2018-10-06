@@ -1,0 +1,73 @@
+body{
+    background: rgba(255,245,225,0.5);
+}
+#box-blog{
+    margin-top: 100px;
+    background: white;
+}
+#box-caption {
+    text-align: center;
+
+}
+
+#author,#time{
+    color: gray;
+    padding: 6px;
+    font-weight:normal; 
+}
+
+#box-content{
+    padding: 6px;
+}
+
+#card-name{
+    background:black;
+    color:white;
+    border-radius:50%; 
+    width:50px;
+    height:50px;
+    padding:4px;
+    text-align:center;
+    position:relative;
+    float: left;
+    margin-bottom: 20px;
+    margin-top:5px;
+    margin-right: 18px; 
+    
+}
+#name{
+    position:absolute;
+    top:15px;
+    left:0;
+}
+#box-comment{
+    margin-bottom: 10px;
+    height: auto;
+    display: block;
+    /* padding: 4px; */
+}
+.card-comment{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(
+        0, 0, 0, 0.19);
+    background: white;
+    position: relative;
+    margin-bottom: 10px;
+}
+#card-content p{
+    margin-top: 12px;
+    
+}
+/* #card-content{
+    position: absolute;
+    top: 12px;
+    left: 80px;
+} */
+#card-date{
+    position: absolute;
+    right: 8px;
+    bottom: 2px;
+}
+#card-date label{
+    color: gray;
+    font-weight: lighter;
+}

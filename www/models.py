@@ -10,13 +10,13 @@ import time,uuid
 from orm import Model,StringField, BooleanField, FloatField, TextField
 
 def next_id():
-    return '%015d%s00' %(int(time.time()),uuid.uuid4().hex)
+    return '%015d%s000' % (int(time.time() * 1000), uuid.uuid4().hex)
 
 class User(Model):
     __table__='users'
 
     #定义类属性
-    id=StringField(default=next_id(),primary_key=True,ddl='varchar(50)')
+    id=StringField(default=next_id,primary_key=True,ddl='varchar(50)')
     email=StringField(ddl='varchar(50)')
     passwrd=StringField(ddl='varchar(50)')
     admin=BooleanField()
@@ -29,7 +29,7 @@ class Blog(Model):
     __table__='blogs'
 
     #定义类属性
-    id=StringField(primary_key=True,default=next_id(),ddl='varchar(50)')
+    id=StringField(primary_key=True,default=next_id,ddl='varchar(50)')
     user_id=StringField(ddl='varchar(50)')
     user_name=StringField(ddl='varchar(50)')
     user_image=StringField(ddl='varchar(500)')
@@ -44,7 +44,7 @@ class Comment(Model):
     __table__='comments'
 
     #类属性
-    id=StringField(primary_key=True,ddl='varchar(50)', default=next_id())
+    id=StringField(primary_key=True,ddl='varchar(50)', default=next_id)
     blog_id=StringField(ddl='varchar(50)')
     user_id=StringField(ddl='varchar(50)')
     user_name=StringField(ddl='varchar(50)')

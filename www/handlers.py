@@ -142,7 +142,7 @@ async def push_blog_page(request):
     }
 
 @post('/api/get_blog_list')
-async def get_coding_list(*,belong_to,page,num):
+async def get_blog_list(*,belong_to,page,num):
     page=int(page)
     num=int(num)
     cnt= await Blog.findNumber('count(id)',where="belong_to='"+belong_to+"'")
@@ -151,12 +151,22 @@ async def get_coding_list(*,belong_to,page,num):
         page=page_max
     top=(page-1)*num
     limit=(int(top),int(num))
-    blogs= await Blog.findColumn(("`id`,`caption`","`summary`","`belong_to`","`subdivide`","`summary`","`create_at`"), where = "`belong_to`='coding'", orderBy='create_at desc',limit = limit)
+    blogs= await Blog.findColumn(("`id`,`caption`","`summary`","`belong_to`","`subdivide`","`summary`","`create_at`"), where = '`belong_to`="'+belong_to+'"', orderBy='create_at desc',limit = limit)
     for d in blogs:
         for k,v in d.items():
             if k=='create_at':
                 d[k]=datetime_filter(v)
     return dict(blogs=blogs,max_page=page_max,page=page)
+
+@get('/get_blog/{id}')
+async def get_blog(id):
+    blog= await Blog.find(id)
+    blog.create_at=datetime_filter(blog.create_at)
+    return{
+        '__template__':'blog_page.html',
+        'blog':blog
+    }
+
 
 # @get('/api/users')
 # async def api_get_users():
@@ -255,3 +265,33 @@ async def push_blog(request,*,caption,summary,content,belong_to,subdivide):
     blog.create_at=datetime_filter(blog.create_at)
     return dict(blog=blog,error=error)
 
+@post('/api/add_comment')
+async def add_comment(request,*,blog_id,content):
+    error="none"
+    if not request.__user__ :
+        error="未登录，请登录后评论"
+        return dict(error=error)
+    user=request.__user__
+    user_id=user.id
+    user_name=user.name
+    user_image=user.image
+    comment=Comment(blog_id=blog_id,user_id=user_id,user_name=user_name,user_image=user_image,content=content)
+    affected = await comment.save()
+    return (dict(error=error))
+
+@post('/api/get_comment_list')
+async def get_comment_list(*,blog_id,page,num):
+    page=int(page)
+    num=int(num)
+    cnt= await Comment.findNumber('count(id)',where="blog_id='"+blog_id+"'")
+    page_max=cnt//num +1
+    if page>page_max:
+        page=page_max
+    top=(page-1)*num
+    limit=(int(top),int(num))
+    comments= await Comment.findAllOrMany( where = 'blog_id="'+blog_id+'"', orderBy='create_at desc',limit = limit)
+    for d in comments:
+        for k,v in d.items():
+            if k=='create_at':
+                d[k]=datetime_filter(v)
+    return dict(comments=comments,max_page=page_max,page=page)

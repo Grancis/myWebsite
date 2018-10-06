@@ -1,8 +1,8 @@
 _page=0;
 _max_page=1;
-_num=7;
-_url="/api/get_blog_list"
-function nextPage(belong_to){
+_num=10;
+_url="/api/get_comment_list";
+function nextPage(){
     if (_page<_max_page){
         //尝试获取下一个page
         next_page=_page+1
@@ -10,7 +10,7 @@ function nextPage(belong_to){
             type: "post",
             url: _url,
             data: {
-                "belong_to":belong_to,
+                "blog_id":_blog_id,
                 "page":next_page,
                 "num":_num+""
             },
@@ -19,16 +19,16 @@ function nextPage(belong_to){
                 _page=data.page //当前获取到的page
                 $("#page").text(_page);
                 _max_page=data.max_page;
-                list_box=$('.list-box')[0];
+                list_box=$('#box-comment');
                 $(list_box).children().remove();
-                $.each(data.blogs,function(i,obj){
-                    item=createListItem(obj.id,obj.subdivide,obj.caption,obj.summary,obj.create_at);
+                $.each(data.comments,function(i,obj){
+                    item=createListItem(obj.user_name,obj.content,obj.create_at);
                     $(list_box).append(item);
                 })
                 
             },
             error: function (e){
-                alert(e);
+                alert("error, inform administrator.");
             }
         })
     }
@@ -37,14 +37,14 @@ function nextPage(belong_to){
     }
 }
 
-function prePage(belong_to){
+function prePage(blogid){
     if(_page>1){
         pre_page=_page-1;
         $.ajax({
             type:"post",
             url:_url,
             data:{
-                "belong_to":belong_to,
+                "blog_id":_blog_id,
                 "page":pre_page,
                 "num":_num+""
             },
@@ -52,17 +52,17 @@ function prePage(belong_to){
             success: function(data){
                 _page=data.page//获得返回的page值
                 $("#page").text(_page);//设置当前页面值
-                list_box=$('.list-box')[0];
+                list_box=$('#box-comment');
                 $(list_box).children().remove();
-                $.each(data.blogs,function(i,obj){
-                    item=createListItem(obj.id,obj.subdivide,obj.caption,obj.summary,obj.create_at);
+                $.each(data.comments,function(i,obj){
+                    item=createListItem(obj.user_name,obj.content,obj.create_at);
                     $(list_box).append(item);
                 })
                 
                 
             },
             error: function (e){
-                alert(e);
+                alert("error, inform administrator.");
             }
         })
     }

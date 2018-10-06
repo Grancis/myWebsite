@@ -41,7 +41,7 @@ function createListItem(id,subdivide,caption,suammry,date){
     img_src='../static/image/'+subdivide+'.svg'
     var img=$('<img src='+img_src+' class="list-icon img-responsive">')
     var caption_div=$('<div class="list-info"></div>')
-    var link=$('<a href="/get_blog?id='+id+'">'+caption+'</a>')
+    var link=$('<a href="/get_blog/'+id+'">'+caption+'</a>')
     var date_div=('<div class="list-date">'+date+'</div>')
     $(caption_div).append(link);
     $(box_div).append(img);
