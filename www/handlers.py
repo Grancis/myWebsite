@@ -142,7 +142,7 @@ async def push_blog_page(request):
     }
 
 @post('/api/get_blog_list')
-async def get_blog_list(*,belong_to,page,num):
+async def api_get_blog_list(*,belong_to,page,num,subdivide):
     page=int(page)
     num=int(num)
     cnt= await Blog.findNumber('count(id)',where="belong_to='"+belong_to+"'")
@@ -151,7 +151,11 @@ async def get_blog_list(*,belong_to,page,num):
         page=page_max
     top=(page-1)*num
     limit=(int(top),int(num))
-    blogs= await Blog.findColumn(("`id`,`caption`","`summary`","`belong_to`","`subdivide`","`summary`","`create_at`"), where = '`belong_to`="'+belong_to+'"', orderBy='create_at desc',limit = limit)
+    blogs=None
+    if subdivide == 'none':
+        blogs= await Blog.findColumn(("`id`,`caption`","`summary`","`belong_to`","`subdivide`","`summary`","`create_at`"), where = '`belong_to`="'+belong_to+'"', orderBy='create_at desc',limit = limit)
+    else:
+        blogs= await Blog.findColumn(("`id`,`caption`","`summary`","`belong_to`","`subdivide`","`summary`","`create_at`"), where = '`subdivide`="'+subdivide+'"', orderBy='create_at desc',limit = limit)
     for d in blogs:
         for k,v in d.items():
             if k=='create_at':
@@ -159,14 +163,26 @@ async def get_blog_list(*,belong_to,page,num):
     return dict(blogs=blogs,max_page=page_max,page=page)
 
 @get('/get_blog/{id}')
-async def get_blog(id):
+async def get_blog(id,request):
+    name,a_link_to=set_user(request)
     blog= await Blog.find(id)
     blog.create_at=datetime_filter(blog.create_at)
     return{
         '__template__':'blog_page.html',
-        'blog':blog
+        'blog':blog,
+        'name' : name,
+        'href' : a_link_to
     }
 
+@get('/get_blog_list/{subdivide}')
+async def get_blog_list(subdivide,request):
+    name,a_link_to=set_user(request)
+    return {
+        '__template__':'blog_list.html',
+        'subdivide':subdivide,
+        'name':name,
+        'href':a_link_to
+    }
 
 # @get('/api/users')
 # async def api_get_users():

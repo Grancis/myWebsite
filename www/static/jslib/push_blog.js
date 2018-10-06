@@ -2,10 +2,10 @@ function createSubSelect(){
     belong_to=$("#belong_to option:selected").text()
     // options_text;
     if (belong_to=="essay"){
-        options_text=new Array("booking","it","news","lost_thinking_?")
+        options_text=new Array("booking","it","news","lost_thinking")
     }
     else if(belong_to=="coding"){
-        options_text=new Array("fontEnd","python","java","matlab","ohter")
+        options_text=new Array("frontEnd","python","java","matlab","ohter")
     }
     else if(belong_to=="photography"){
         options_text=new Array ("pr","ps","ae","other")

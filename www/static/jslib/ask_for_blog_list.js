@@ -1,0 +1,3 @@
+function askForBlogList(subdivide){
+    
+}

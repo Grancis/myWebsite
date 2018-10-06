@@ -1,0 +1,68 @@
+{% extends "__base__.html" %}
+{% block head %}
+    {{super()}}
+    <link rel="stylesheet" href="../static/styles/pagination.css">
+    <link rel="stylesheet" href="../static/styles/blog_list.css">
+    <script src="../static/jslib/pagination.js"></script>
+    <script src="../static/jslib/blog_list.js"></script>
+{% endblock %}
+
+{% block nav_list %}
+    <li id="nav-home"><a href="/">Home</a></li>
+    <li id="nav-blog"><a href="/blog">Thinking Series</a></li>
+    <li id="nav-coding"><a href="/coding">Coding&Explore</a></li>
+    <li id="nav-pho"><a href="/photography">Photography</a></li>
+    <li id="nav-about"><a href="/about">About&GitHub</a></li>
+    <li id="nav-user"><a id="user" href={{href}}>{{name}}</a></li>
+{% endblock %}
+
+{% block banner %}
+<img src="../static/image/banner.png" class="img-responsive" >
+{% endblock %}
+
+{% block container %}
+    <input type="hidden" name="subdivide" value={{subdivide}}>
+    <div class="container">
+        <div class="box-list" >
+
+            <!-- <div class="card-blog col-md-8 col-md-offset-2 col-xs-12" onclick="clickTo(id)">
+                <div class="box-caption">
+                    <h1 class="caption">Caption</h1>
+                </div>
+                <div class="box-summary">
+                    <p class="summary">summary</p>
+                </div>
+                <br>
+                <div class="box-date">
+                    <label class="date">date</label>
+                </div>
+            </div>
+
+            <div class="card-blog col-md-8 col-md-offset-2 col-xs-12">
+                <div class="box-caption">
+                    <h1 class="caption">Caption</h1>
+                </div>
+                <div class="box-summary">
+                    <p class="summary">summary</p>
+                </div>
+                <br>
+                <div class="box-date">
+                    <label class="date">date</label>
+                </div>
+            </div> -->
+
+        </div>
+
+        <div id="box-pagination" class="col-md-4 col-md-offset-4">
+            <div>
+            <div class="center-box">
+                <ul class="pagination">
+                    <li><a href="javascript:prePage()" class="left-end">«</a></li>
+                    <li><a href="#" class="active-page" id="page">1</a></li>
+                    <li><a href="javascript:nextPage()" class="right-end">»</a></li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
