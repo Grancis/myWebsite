@@ -24,6 +24,7 @@ function nextPage(){
                 $.each(data.comments,function(i,obj){
                     item=createListItem(obj.user_name,obj.content,obj.create_at);
                     $(list_box).append(item);
+                    window.location.href="#box-add-comment";
                 })
                 
             },
@@ -58,6 +59,8 @@ function prePage(blogid){
                     item=createListItem(obj.user_name,obj.content,obj.create_at);
                     $(list_box).append(item);
                 })
+                
+                window.location.href="#box-add-comment";
                 
                 
             },

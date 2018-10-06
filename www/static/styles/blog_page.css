@@ -4,6 +4,7 @@ body{
 #box-blog{
     margin-top: 100px;
     background: white;
+    border-radius: 4px;
 }
 #box-caption {
     text-align: center;
@@ -37,8 +38,9 @@ body{
 }
 #name{
     position:absolute;
-    top:15px;
-    left:0;
+    top:6px;
+    left:12px;
+    font-size: 28px;
 }
 #box-comment{
     margin-bottom: 10px;
@@ -52,6 +54,7 @@ body{
     background: white;
     position: relative;
     margin-bottom: 10px;
+    border-radius: 4px;
 }
 #card-content p{
     margin-top: 12px;

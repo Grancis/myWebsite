@@ -1,13 +1,14 @@
 _blog_id="";
 
 function createListItem(user_name,content,create_at){
-    card_box=$('<div class="card-comment col-md-8 col-md-offset-1 col-xs-12"></div>');
+    card_box=$('<div class="card-comment col-md-8 col-md-offset-2 col-xs-12"></div>');
     card_name=$('<div id="card-name"></div>');
-    label_name=$('<label id="name">'+user_name+'</label>');
+    $(card_name).css("background-color",getRandomRGB());
+    label_name=$('<label id="name">'+user_name.substring(0,1)+'</label>');
     card_content=$('<div id="card-content"></div>');
-    card_content_p=$('<p id="card-content-p">'+content+'</p>');
+    card_content_p=$('<p id="card-content-p"><strong>'+user_name+':</strong>'+content+'</p>');
     br=$('<br>');
-    card_date=$('<div id="card-date"></div>');
+    card_date=$('<div class="card-date"></div>');
     label_date=$('<label id="date">'+create_at+'</label>');
 
     $(card_date).append(label_date);
