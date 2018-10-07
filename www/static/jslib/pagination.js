@@ -23,9 +23,14 @@ function nextPage(){
                 $("#page").text(_page);
                 _max_page=data.max_page;
                 list_box=$('.box-list')[0];
+                cnt=0;
                 $(list_box).children().remove();
                 $.each(data.blogs,function(i,obj){
                     item=createListItem(obj.id,obj.subdivide,obj.caption,obj.summary,obj.create_at);
+                    cnt=cnt+1;
+                    if (cnt%2 !=0){
+                        $(item).addClass('bkgClear')
+                    }
                     $(list_box).append(item);
                 })
                 

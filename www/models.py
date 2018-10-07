@@ -52,4 +52,15 @@ class Comment(Model):
     content=TextField()
     create_at=FloatField(default=time.time)
 
+class PageNews(Model):
+    __table__='page_news'
 
+    id=StringField(primary_key=True,ddl='varchar(50)', default=next_id)
+    home=StringField(ddl='varchar(50)')
+    booking=StringField(ddl='varchar(100)')
+    it=StringField(ddl='varchar(100)')
+    news=StringField(ddl='varchar(100)')
+    thinking=StringField(ddl='varchar(100)')
+    coding=StringField(ddl='varchar(200)')
+    photography=StringField(ddl='varchar(200)')
+    create_at=FloatField(default=time.time)

@@ -13,7 +13,7 @@ from coroweb import get, post
 from aiohttp import web
 
 from filters import datetime_filter
-from models import User, Comment, Blog, next_id
+from models import User, Comment, Blog, PageNews, next_id
 from config import configs
 
 from apis import APIError,APIValueError,APIPermissionError,APIResourceNotFound
@@ -70,45 +70,75 @@ def set_user(request):
         name=request.__user__.name
         a_link_to='/user_page'
     else:
-        name='/*login*/'
+        name='<login>'
         a_link_to='/login_or_signin'
     return (name,a_link_to)
+
+async def get_page_news():
+    page_news= await PageNews.findAllOrMany()
+    if len(page_news) != 1:
+        page_news=page_news[0]
+    page_news=page_news[0]
+    return page_news
+    
 
 @get('/')
 async def index(request):
     name,a_link_to=set_user(request)
+    news= (await get_page_news()).home
+    if news=='none':
+        news=''
     return{
         '__template__' : 'index.html',
         'name' : name,
-        'href' : a_link_to
+        'href' : a_link_to,
+        'news' : news
     }
 
 
 @get('/blog')
 async def blog_page(request):
     name,a_link_to=set_user(request)
+    total=await get_page_news()
+    for k,v in total.items():
+        if v=='none':
+            total[k]=''
+    booking= total.booking
+    it=total.it
+    news=total.news
+    thinking=total.thinking
+    total_news={'booking':booking,'it':it,'news':news,'thinking':thinking}
     return{
         '__template__':'blog.html',
         'name' : name,
-        'href' : a_link_to
+        'href' : a_link_to,
+        'news' : total_news
     }
 
 @get('/coding')
 async def coding_page(request):
     name,a_link_to=set_user(request)
+    news= (await get_page_news()).coding
+    if news=='none':
+        news=''
     return{
         '__template__':'Coding.html',
         'name' : name,
-        'href' : a_link_to
+        'href' : a_link_to,
+        'news' : news
     }
 
 @get('/photography')
 async def photography_page(request):
     name,a_link_to=set_user(request)
+    news= (await get_page_news()).photography
+    if news=='none':
+        news=''
     return{
         '__template__':'photography.html',
         'name' : name,
-        'href' : a_link_to
+        'href' : a_link_to,
+        'news' : news
     }
 
 @get('/about')
@@ -116,6 +146,24 @@ async def about_page(request):
     name,a_link_to=set_user(request)
     return{
         '__template__':'about.html',
+        'name' : name,
+        'href' : a_link_to
+    }
+
+@get('/manage/manage_comments')
+async def manage_comments(request):
+    name,a_link_to=set_user(request)
+    return{
+        '__template__':'manage_comments.html',
+        'name' : name,
+        'href' : a_link_to
+    }
+
+@get('/manage/manage_users')
+async def manage_users(request):
+    name,a_link_to=set_user(request)
+    return{
+        '__template__':'manage_users.html',
         'name' : name,
         'href' : a_link_to
     }
@@ -184,12 +232,28 @@ async def get_blog_list(subdivide,request):
         'href':a_link_to
     }
 
-# @get('/api/users')
-# async def api_get_users():
-#     users = await User.findAllOrMany(orderBy='create_at desc',limit=7,where="`name`='test'")
-#     for u in users:
-#         u.passwd = '******'
-#     return dict(users=users)
+@get('/manage/update_page')
+async def update_page(request):
+    name,a_link_to=set_user(request)
+    return{
+        '__template__':'update_page.html',
+        'name':name,
+        'href':a_link_to
+    }
+@get('/manage/api/users')
+async def api_get_users():
+    users = await User.findAllOrMany(orderBy='create_at desc')#where="`name`='test'"
+    for u in users:
+        u.passwd = '******'
+        u.create_at=datetime_filter(u.create_at)
+    return dict(users=users)
+
+@get('/manage/api/comments')
+async def api_get_comments():
+    comments = await Comment.findAllOrMany(orderBy='create_at desc')#where="`name`='test'"
+    for c in comments:
+        c.create_at=datetime_filter(c.create_at)
+    return dict(comments=comments)
 
 @post('/api/authenticate')
 async def authenticate(*,email,passwrd):
@@ -274,7 +338,7 @@ async def push_blog(request,*,caption,summary,content,belong_to,subdivide):
     blog=Blog(caption=caption,summary=summary,content=content,belong_to=belong_to,subdivide=subdivide,user_id=user.id,user_name=user.name,user_image=user.image)
     affected = await blog.save()
     if affected != 1:
-        error='affected rows : %s' %affected
+        error='affected rows : %d' %affected
     else:
         error='none'
     blog.content='*****'
@@ -311,3 +375,44 @@ async def get_comment_list(*,blog_id,page,num):
             if k=='create_at':
                 d[k]=datetime_filter(v)
     return dict(comments=comments,max_page=page_max,page=page)
+
+
+@post('/manage/api/update_pages')
+async def update_pages(*,home,booking,it,news,thinking,coding,photography):
+    old= await get_page_news()
+    # logging.info(**old)
+    if booking=='none':
+        booking=old.booking    
+    if it == 'none' :
+        it=old.it
+    if news == 'none' :
+        news=old.news
+    if thinking=='none':
+        thinking=old.thinking
+    id=old.id
+    page_news=PageNews(id=id,home=home,booking=booking,it=it,news=news,thinking=thinking,coding=coding,photography=photography,create_at=old.create_at)
+    logging.info(page_news)
+    error='none'
+    if (await page_news.update()) !=1 :
+        error='affected rows is not equal to one'
+    return dict(error=error)
+
+@post('/manage/api/delete_comment')
+async def delete_comment(*,id):
+    comment= await Comment.findAllOrMany('id=?',[id])
+    comment=comment[0]
+    affected= await comment.remove()
+    error='none'
+    if affected != 1 :
+        error='affected rows is %d' %affected
+    return dict(error=error,comment=comment)
+
+@post('/manage/api/delete_user')
+async def delete_user(*,id):
+    user= await User.findAllOrMany('id=?',[id])
+    user=user[0]
+    affected= await user.remove()
+    error='none'
+    if affected != 1 :
+        error='affected rows is %d' %affected 
+    return dict(error=error,user=user)

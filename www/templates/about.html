@@ -2,6 +2,15 @@
 {% block banner %}
 <img src="../static/image/banner.png" class="img-responsive" >
 {% endblock %}
+{% block head %}
+    {{super()}}
+    <style>
+        #content{
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
 
 {% block nav_list %}
     <li><a href="/">Home</a></li>
@@ -10,4 +19,15 @@
     <li><a href="/photography">Photography</a></li>
     <li class="active"><a href="/about">About&GitHub</a></li>
     <li><a id="user" href={{href}}>{{name}}</a></li>
+{% endblock %}
+
+{% block container %}
+    <div class="container">
+        <div id="content">
+            <P>本网站将作为我的博客网站，记录我的成长轨迹</P>
+            <p>网站前端完全由本人基于 <a href="https://www.jquery.com/">jQurey</a> <a href="http://www.bootcss.com/">Bootstrap</a> 进行开发，后端参考<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">廖雪峰老师的Python教程</a>用Python搭建</p>
+            <p>网站源代码完全同步在<a href="https://github.com/Grancis/myWebsite">GitHub</a>上,欢迎有兴趣者使用，在GitHub上进行学习交流</p>
+            <p>访问过程中出现问题，可点击底部的微博或者GitHub图标给我留言，感谢您的反馈</p>
+        </div>
+    </div>
 {% endblock %}

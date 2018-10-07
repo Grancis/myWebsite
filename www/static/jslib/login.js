@@ -37,7 +37,7 @@ function login(){
             if(rs.email==email){
                 // alert("注册成功，确认后跳转至原页面");
                 //无历史则跳转index
-                if(history){window.location.href=history_href}
+                if(history_href){window.location.href=history_href}
                 else{window.location.href="/"}
             }
         },
@@ -80,7 +80,7 @@ function register(){
             success: function(rs){
                 if(rs.email==email){
                     alert("注册成功，确认后跳转至原页面");
-                    if(history){window.location.href=history_href}
+                    if(history_href){window.location.href=history_href}
                     else{window.location.href="/"}
                 }
             },

@@ -4,3 +4,21 @@ footer{
     text-align: center;
     margin-top: 20px;
 }
+
+.footer-icon img{
+    width: 24px;
+    cursor: pointer;
+}
+
+.footer-icon{
+    cursor: pointer;
+}
+
+.box-state{
+    text-align: center;
+}
+
+#svg-github:hover,#svg-weibo:hover{
+    width: 32px;
+    cursor: pointer;
+}

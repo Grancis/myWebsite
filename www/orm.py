@@ -49,13 +49,14 @@ async def select(sql,args,size=None):
 async def execute(sql, args, autocommit=True):
     log(sql)
     global __pool
-    async with __pool.get() as conn:
+    with ( await __pool) as conn:
         if not autocommit:
             await conn.begin()
         try:
-            async with conn.cursor(aiomysql.DictCursor) as cur:
-                await cur.execute(sql.replace('?', '%s'), args)
-                affected = cur.rowcount
+            cur = await conn.cursor()
+            await cur.execute(sql.replace('?', '%s'), args)
+            affected = cur.rowcount
+            await cur.close()
             if not autocommit:
                 await conn.commit()
         except BaseException as e:
@@ -144,7 +145,7 @@ class ModelMetaclass(type):
             #构造默认的SELECT INSERT UPDATE和DELETE语句
             attrs['__select__']='SELECT `%s`, %s FROM `%s`' %(primaryKey,','.join(escaped_fields),table_name)
             attrs['__insert__']='INSERT INTO `%s` (%s, `%s`) VALUES (%s)' %(table_name,','.join(escaped_fields),primaryKey,create_args_string(len(escaped_fields)+1))
-            attrs['__update__']='UPDATE `%s` SET %s WHERE `%s`=?' %(table_name, ','.join(map(lambda f:'`%s=?' %(mappings.get(f).name or f),fields)),primaryKey)
+            attrs['__update__'] = 'update `%s` set %s where `%s`=?' % (table_name, ', '.join(map(lambda f: '`%s`=?' % (mappings.get(f).name or f), fields)), primaryKey)
             attrs['__delete__']='DELETE FROM `%s` WHERE `%s`=?' %(table_name,primaryKey)
             return type.__new__(cls,name,bases,attrs)
 
@@ -264,9 +265,11 @@ class Model(dict, metaclass=ModelMetaclass):
         rows = await execute(self.__update__, args)
         if rows != 1:
             logging.warn('failed to update by primary key: affected rows: %s' % rows)
+        return rows
 
     async def remove(self):
         args = [self.getValue(self.__primary_key__)]
         rows = await execute(self.__delete__, args)
         if rows != 1:
             logging.warn('failed to remove by primary key: affected rows: %s' % rows)
+        return rows

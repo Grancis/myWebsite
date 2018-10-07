@@ -1,109 +1,96 @@
-<!DOCTYPE html>
-<html>
-    <head>        
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-        <title>Grancis' Personal Website</title>
-        <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="../static/styles/card.css">
-        <link rel="stylesheet" href="../static/styles/nav.css">
-        <link rel="stylesheet" href="../static/styles/footer.css">
-        <link rel="stylesheet" href="../static/styles/card-across.css">
-        <link rel="stylesheet" href="../static/styles/banner.css">
-        <link rel="stylesheet" href="../static/styles/list-box-basic.css">
-        <link rel="stylesheet" href="../static/styles/photography.css">
-        <script src="../static/jslib/photography.js"></script>
-    </head>
-    <body>
-        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
-                        <span class="sr-only">切换导航</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand"><embed id="brand" src="../static/image/Grancis.svg" type="image/svg+xml" /></a>
-                </div>
+{% extends "__base__.html" %}
+{% block head %}
+    {{super()}}
+    <link rel="stylesheet" href="../static/styles/card.css">
+    <link rel="stylesheet" href="../static/styles/card-across.css">
+    <link rel="stylesheet" href="../static/styles/list-box-basic.css">
+    <link rel="stylesheet" href="../static/styles/pagination.css">
+    <link rel="stylesheet" href="../static/styles/photography.css">
+    <script src="../static/jslib/pagination.js"></script>
+    <script src="../static/jslib/photography.js"></script>
+{% endblock %}
+
+{% block nav_list %}
+    <li><a href="/">Home</a></li>
+    <li><a href="/blog">Thinking Series</a></li>
+    <li><a href="/coding">Coding&Explore</a></li>
+    <li class="active"><a href="/photography">Photography</a></li>
+    <li><a href="/about">About&GitHub</a></li>
+    <li><a id="user" href={{href}}>{{name}}</a></li>
+{% endblock %}
+
+{% block banner %}
+    <img src="../static/image/banner-photography.png" class="img-responsive" >
+{% endblock %}
+
+
+{% block container%}
+<p style="text-align:center">{{news}}</p>
+<div class="container video-box">
+    <div class="video-header header">
+        <h1>视频作品</h1>
+    </div>
+    <hr>
+    <div class="video-card card-acorss col-xs-6 col-md-8 col-md-offset-2" >
+        <div class="card-header col-md-3 col-xs-12">
+            <img onclick='clickTo("https://www.bilibili.com/video/av16211275?from=search&seid=62554349124282893")' src="../static/image/photography/LG_Birthday-Don't Starve.png" class="img-responsive">
+            <div class="overView">
+                <img class="img-responsive" src="../static/image/bilibili.svg" onclick='clickTo("https://www.bilibili.com/video/av16211275?from=search&seid=62554349124282893")'>
+            </div>
+        </div>
+        <div class="card-content">
+            <h1 onclick='clickTo("https://www.bilibili.com/video/av16211275?from=search&seid=62554349124282893")'>柳高110周年校庆视频（饥荒版）</h1>
+            <p>穿越风雨的世纪之钟，守望记忆的百岁古榕。</p><a onclick="cardContentSwitch(this)" id="card-content-switch">More</a><br>
+                <p id="hidden-content">柳州高中迎来了他的第110个生日，为庆祝柳高110周年生日，2016届17班柳高生特以饥荒游戏视角来制作了怀念柳高生活的校庆视频。
+                此视频从开始筹划到结束，历时两个月，饥荒游戏生存天数长达200+，为呈现一个更好的柳高，游戏中建设了无数遍；剧本修改了多次，费尽脑汁；配音重复了多次，只为更好地给母校说一句，生日快乐和我爱你。
+                校庆来临之际，我们想说：“祝柳高生日快乐！柳高我爱你！</p>
+        </div>
+    </div>
+</div>
+
+<div class="container content-box">
+    <div class="content-header">
+        <h1>最近发布:</h1>
+    </div>
+    <hr>
+    <div class="box-list">
+        <div class="list-item">
+            <img src="../static/image/ps.svg" class="list-icon img-responsive">
+            <div class="list-info"><a href="#">Ps学习</a></div>
+            <div class="list-date">23/09/2018</div>
+        </div>
+        <div class="list-item bkgClear">
+            <img src="../static/image/Adobe Premiere Pro.svg" class="list-icon img-responsive">
+            <div class="list-info"><a href="#">Pr学习</a></div>
+            <div class="list-date">21/09/2018</div>
+        </div>
+        <div class="list-item">
+            <img src="../static/image/Adobe Premiere Pro.svg" class="list-icon img-responsive">
+            <div class="list-info"><a href="#">升格：光流法</a></div>
+            <div class="list-date">21/09/2018</div>
+        </div>
+        <div class="list-item bkgClear">
+            <img src="../static/image/ps.svg" class="list-icon img-responsive">
+            <div class="list-info"><a href="#">毛玻璃效果制作</a></div>
+            <div class="list-date">21/09/2018</div>
+        </div>
+        <div class="list-item ">
+            <img src="../static/image/ps.svg" class="list-icon img-responsive">
+            <div class="list-info"><a href="#">毛玻璃效果制作</a></div>
+            <div class="list-date">21/09/2018</div>
+        </div>
+    </div>
     
-                <div class="collapse navbar-collapse" id="example-navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/blog">Thinking Series</a></li>
-                        <li><a href="/coding">Coding&Explore</a></li>
-                        <li class="active"><a href="/photography">Photography</a></li>
-                        <li><a href="/about">About&GitHub</a></li>
-                        <li><a id="user" href="/login_or_signin">/*Login*/</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+</div>
 
-        <div class="banner">
-            <img src="../static/image/banner-photography.png" class="img-responsive">
-        </div>
+<div class="col-md-4 col-md-offset-4">
+        <div class="center-box">
+        <ul class="pagination">
+            <li><a href="javascript:prePage('coding')" class="left-end">«</a></li>
+            <li><a href="#" class="active-page" id="page">1</a></li>
+            <li><a href="javascript:nextPage('coding')" class="right-end">»</a></li>
+        </ul>
+    </div>
+</div>
 
-        <div class="container video-box">
-            <div class="video-header header">
-                <h1>视频作品</h1>
-            </div>
-            <hr>
-            <div class="video-card card-acorss col-xs-6 col-md-8 col-md-offset-2" >
-                <div class="card-header col-md-3 col-xs-12">
-                    <img onclick='clickTo("https://www.bilibili.com/video/av16211275?from=search&seid=62554349124282893")' src="../static/image/photography/LG_Birthday-Don't Starve.png" class="img-responsive">
-                    <div class="overView">
-                        <img class="img-responsive" src="../static/image/bilibili.svg" onclick='clickTo("https://www.bilibili.com/video/av16211275?from=search&seid=62554349124282893")'>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <h1 onclick='clickTo("https://www.bilibili.com/video/av16211275?from=search&seid=62554349124282893")'>柳高110周年校庆视频（饥荒版）</h1>
-                    <p>穿越风雨的世纪之钟，守望记忆的百岁古榕。</p><a onclick="cardContentSwitch(this)" id="card-content-switch">More</a><br>
-                        <p id="hidden-content">柳州高中迎来了他的第110个生日，为庆祝柳高110周年生日，2016届17班柳高生特以饥荒游戏视角来制作了怀念柳高生活的校庆视频。
-                        此视频从开始筹划到结束，历时两个月，饥荒游戏生存天数长达200+，为呈现一个更好的柳高，游戏中建设了无数遍；剧本修改了多次，费尽脑汁；配音重复了多次，只为更好地给母校说一句，生日快乐和我爱你。
-                        校庆来临之际，我们想说：“祝柳高生日快乐！柳高我爱你！</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="container content-box">
-            <div class="content-header">
-                <h1>最近发布:</h1>
-            </div>
-            <hr>
-            <div class="list-box">
-                <div class="list-item">
-                    <img src="../static/image/ps.svg" class="list-icon img-responsive">
-                    <div class="list-info"><a href="#">Ps学习</a></div>
-                    <div class="list-date">23/09/2018</div>
-                </div>
-                <div class="list-item bkgClear">
-                    <img src="../static/image/Adobe Premiere Pro.svg" class="list-icon img-responsive">
-                    <div class="list-info"><a href="#">Pr学习</a></div>
-                    <div class="list-date">21/09/2018</div>
-                </div>
-                <div class="list-item">
-                    <img src="../static/image/Adobe Premiere Pro.svg" class="list-icon img-responsive">
-                    <div class="list-info"><a href="#">升格：光流法</a></div>
-                    <div class="list-date">21/09/2018</div>
-                </div>
-                <div class="list-item bkgClear">
-                    <img src="../static/image/ps.svg" class="list-icon img-responsive">
-                    <div class="list-info"><a href="#">毛玻璃效果制作</a></div>
-                    <div class="list-date">21/09/2018</div>
-                </div>
-                <div class="list-item ">
-                    <img src="../static/image/ps.svg" class="list-icon img-responsive">
-                    <div class="list-info"><a href="#">毛玻璃效果制作</a></div>
-                    <div class="list-date">21/09/2018</div>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-                @copyright: designed by Grancis
-        </footer>
-    </body>
-</html>
+{% endblock %}

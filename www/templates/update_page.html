@@ -1,0 +1,65 @@
+{% extends "__base__.html" %}
+
+{% block head %}
+    {{super()}}
+    <style>
+        #form{
+          margin-top:80px;
+        }
+    </style>
+    <script src="../static/jslib/update_page.js"></script>
+{% endblock %}
+
+{% block nav_list %}
+    <li><a href="/">Home</a></li>
+    <li><a href="/blog">Thinking Series</a></li>
+    <li><a href="/coding">Coding&Explore</a></li>
+    <li><a href="/photography">Photography</a></li>
+    <li><a href="/about">About&GitHub</a></li>
+    <li><a id="user" href={{href}}>{{name}}</a></li>
+{% endblock %}
+
+{% block container %}
+<form role="form" id="form" method="POST">
+
+  <div class="form-group col-md-4">
+    <label for="home">home</label>
+    <input type="text" class="form-control" name="home" placeholder="home" value="none">
+  </div>
+
+<div class="form-group col-md-4">
+    <label for="booking">booking</label>
+    <input type="text" class="form-control" name="booking" placeholder="booking" value="none">
+  </div>
+
+  <div class="form-group col-md-4">
+    <label for="it">it</label>
+    <input type="text" class="form-control" name="it" placeholder="it" value="none">
+  </div>
+
+<div class="form-group col-md-4">
+    <label for="news">news</label>
+    <input type="text" class="form-control" name="news" placeholder="news" value="none">
+  </div>
+
+
+<div class="form-group col-md-4">
+    <label for="thinking">thinking</label>
+    <input type="text" class="form-control" name="thinking" placeholder="thinking" value="none">
+  </div>
+
+<div class="form-group col-md-4">
+    <label for="coding">coding</label>
+    <input type="text" class="form-control" name="coding" placeholder="coding" value="none">
+  </div>
+
+  <div class="form-group col-md-4">
+        <label for="photography">photography</label>
+        <input type="text" class="form-control" name="photography" placeholder="photography" value="none">
+      </div>
+
+</form>
+
+<button class="btn btn-info col-xs-6 col-xs-offset-3" onclick="update()">确认修改</button>
+
+{% endblock %}

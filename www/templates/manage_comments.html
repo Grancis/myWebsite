@@ -1,0 +1,114 @@
+{% extends "__base__.html" %}
+
+{% block head %}
+    {{super()}}
+    <style>
+        #container{
+            margin-top: 100px;
+        }
+    </style>
+    <script type="text/javascript">
+        
+        function deleteComment(obj){
+            id=$(obj).attr('id');
+            doAjax(id);
+        }
+        
+        function doAjax(id){
+            $.ajax({
+                type:"post",
+                dataType:"json",
+                url:"/manage/api/delete_comment",
+                data:{
+                    "id":id,
+                },
+                success: function(rs){
+                    error=rs.error
+                    if (error=='none'){
+                        comment=rs.comment;
+                        alert("Delete: "+rs.comment.content+"\nsuccessfully!");
+                        window.location.reload();
+                    }
+                    else{alert(error);}
+                },
+                error: function (e){
+                    alert("check the console!");
+                }
+            })
+        }
+
+        function creatItem(id,user_name,content,create_at){
+            tr=$('<tr></tr>');
+            t_user=$('<td>'+user_name+'</td>');
+            t_content=$('<td>'+content+'</td>');
+            t_date=$('<td>'+create_at+'</td>');
+            t_option=$('<td><button class="btn btn-danger" onclick="deleteComment(this)" id="'+id+'"'+'>'+'删除</button></td>')
+
+            $(tr).append(t_user);
+            $(tr).append(t_content);
+            $(tr).append(t_date);
+            $(tr).append(t_option)
+
+            return $(tr)
+        }
+
+        $(document).ready(function () {
+            $.ajax({
+                type:'get',
+                url:'/manage/api/comments',
+                dataType:'json',
+                data:{},
+                success: function(rs){
+                    box_list=$("#box-list");
+                    $(box_list).children().remove();
+                    $.each(rs.comments,function(i,obj){
+                        item=creatItem(obj.id,obj.user_name,obj.content,obj.create_at)
+                        $(box_list).append(item);
+                    })
+                }
+            })
+        });
+    </script>
+{% endblock %}
+
+{% block nav_list %}
+    <li><a href="/">Home</a></li>
+    <li><a href="/blog">Thinking Series</a></li>
+    <li><a href="/coding">Coding&Explore</a></li>
+    <li><a href="/photography">Photography</a></li>
+    <li><a href="/about">About&GitHub</a></li>
+    <li><a id="user" href={{href}}>{{name}}</a></li>
+{% endblock %}
+
+{% block container %}
+    <div class="container" id="container">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Content</th>
+                        <th>Date</th>
+                        <th>Option</th>
+                    </tr>
+                </thead>
+                <tbody id="box-list">
+                <tr>
+                    <td>格朗西斯</td>
+                    <td>1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</td>
+                    <td>2天前</td>
+                    <td><button class="btn btn-danger" id="comment_id" onclick="deleteComment(this)">删除</button></td>
+                </tr>
+
+                <tr>
+                    <td>格朗西斯</td>
+                    <td>1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</td>
+                    <td>2天前</td>
+                    <td><button class="btn btn-danger" id="comment_id">删除</button></td>
+                </tr>
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+{% endblock %}

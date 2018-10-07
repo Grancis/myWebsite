@@ -1,76 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>Grancis' Personal Website</title>
-    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../static/styles/card.css">
-    <link rel="stylesheet" href="../static/styles/nav.css">
-    <link rel="stylesheet" href="../static/styles/footer.css">
-    <!-- <link rel="stylesheet" href="../static/styles/banner.css"> -->
+{% extends "__base__.html" %}
+
+{% block head %}
+    {{super()}}
     <style>
-        .box{
-            margin-top: 80px;
-        }
-        #head h1{
-            font-size: 24px;
-        }
-        .content-box {
-            font-size: 18px;
-        }
-        #btn-box{
-            margin-top: 20px;
-        }
-    </style>
-    <script>
-        function signout(){
-            history_herf=""
-            if (document.referrer){
-                history_herf=document.referrer
+            .box{
+                margin-top: 80px;
             }
-            else{history=""}
-            $.ajax({
-                type:"get",
-                url:"/signout",
-                success: function(rs){
-                    if(history_herf==""){window.location.href="/"}
-                    else{window.location.href=history_herf}
-                },
-                error:function (){alert("请重试或联系管理员")}
-            })
-        }
-    </script>
-</head>
-<body>
-    <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
-                    <span class="sr-only">切换导航</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand"><embed id="brand" src="../static/image/Grancis.svg" type="image/svg+xml" /></a>
-            </div>
+            #head h1{
+                font-size: 24px;
+            }
+            .content-box {
+                font-size: 18px;
+            }
+            #btn-box{
+                margin-top: 20px;
+            }
+        </style>
+        <script>
+            function signout(){
+                history_herf=""
+                if (document.referrer){
+                    history_herf=document.referrer
+                }
+                else{history=""}
+                $.ajax({
+                    type:"get",
+                    url:"/signout",
+                    success: function(rs){
+                        if(history_herf==""){window.location.href="/"}
+                        else{window.location.href=history_herf}
+                    },
+                    error:function (){alert("请重试或联系管理员")}
+                })
+            }
+        </script>
+{% endblock %}
 
-            <div class="collapse navbar-collapse" id="example-navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">Home</a></li>
-                    <li><a href="/blog">Thinking Series</a></li>
-                    <li><a href="/coding">Coding&Explore</a></li>
-                    <li><a href="/photography">Photography</a></li>
-                    <li><a href="/about">About&GitHub</a></li>
-                    <li><a id="user" href={{href}}>{{name}}</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+{% block nav_list %}
+    <li><a href="/">Home</a></li>
+    <li><a href="/blog">Thinking Series</a></li>
+    <li><a href="/coding">Coding&Explore</a></li>
+    <li><a href="/photography">Photography</a></li>
+    <li class="active"><a href="/about">About&GitHub</a></li>
+    <li><a id="user" href={{href}}>{{name}}</a></li>
+{% endblock %}
 
-    <div class="container box">
+{% block container %}
+<div class="container box">
         <div class="col-xs-12" id="head">
             <h1>用户信息</h1>
             <hr>
@@ -85,9 +61,4 @@
         </div>
     </div>
 
-
-    <footer>
-        @copyright: designed by Grancis
-    </footer>
-</body>
-</html>
+{% endblock %}
