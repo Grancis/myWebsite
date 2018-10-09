@@ -59,7 +59,11 @@
                 <div class="text">matlab</div></div>
         </div>
     </div>
-    <p style="text-align:center">{{news}}</p>
+    {% if news!='' %}
+    <div id="page_news" class="col-xs-8 col-xs-offset-2">
+        <p>{{news}}</p>
+    </div>
+    {% endif %}
     <div class="container content-box">
         <div class="content-header">
             <h1>最近发布:</h1>

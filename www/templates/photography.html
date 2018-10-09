@@ -25,7 +25,11 @@
 
 
 {% block container%}
-<p style="text-align:center">{{news}}</p>
+{% if news!='' %}
+<div id="page_news" class="col-xs-8 col-xs-offset-2">
+    <p>{{news}}</p>
+</div>
+{% endif %}
 <div class="container video-box">
     <div class="video-header header">
         <h1>视频作品</h1>

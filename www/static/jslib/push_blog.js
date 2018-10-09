@@ -45,7 +45,7 @@ $(document).ready(function () {
 });
 
 function push_blog(){
-    caption=$('input[name="caption"').val();
+    caption=$('textarea[name="caption"').val();
     summary=$('textarea[name="summary"]').val();
     content=$('textarea[name="content"]').val();
     belong_to=$("#belong_to option:selected").text();

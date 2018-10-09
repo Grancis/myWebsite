@@ -17,7 +17,14 @@
 {% endblock %}
 
 {% block banner %}
-<img src="../static/image/banner.png" class="img-responsive" >
+    {% if belong_to=='essay' %}
+    <img src="../static/image/assassinator-567.png" class="img-responsive" >
+    {% elif belong_to=='coding' %}
+    <img src="../static/image/banner-coding.png" class="img-responsive" >
+    {% elif belong_to=='photography' %}
+    <img src="../static/image/banner-photography.png" class="img-responsive" >
+    {% else %}
+    {% endif %}
 {% endblock %}
 
 {% block container %}

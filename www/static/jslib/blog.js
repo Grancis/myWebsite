@@ -16,14 +16,14 @@ function show(){
 }
 
 function bookingClick(){
-    window.location.href="/get_blog_list/booking";
+    window.location.href="/get_blog_list/essay_booking";
 }
 function itClick(){
-    window.location.href="/get_blog_list/it";
+    window.location.href="/get_blog_list/essay_it";
 }
 function newsClick(){
-    window.location.href="/get_blog_list/news";
+    window.location.href="/get_blog_list/essay_news";
 }
 function thinkingClick(){
-    window.location.href="/get_blog_list/lost_thinking";
+    window.location.href="/get_blog_list/essay_lost_thinking";
 }

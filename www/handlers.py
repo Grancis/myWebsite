@@ -222,11 +222,16 @@ async def get_blog(id,request):
         'href' : a_link_to
     }
 
-@get('/get_blog_list/{subdivide}')
-async def get_blog_list(subdivide,request):
+@get('/get_blog_list/{belong_subdivide}')
+async def get_blog_list(belong_subdivide,request):
+    belong_to=belong_subdivide.split('_')[0]
+    subdivide=belong_subdivide.split('_')[1]
+    if subdivide=='lost':
+        subdivide+='_thinking'
     name,a_link_to=set_user(request)
     return {
         '__template__':'blog_list.html',
+        'belong_to':belong_to,
         'subdivide':subdivide,
         'name':name,
         'href':a_link_to
@@ -369,7 +374,7 @@ async def get_comment_list(*,blog_id,page,num):
         page=page_max
     top=(page-1)*num
     limit=(int(top),int(num))
-    comments= await Comment.findAllOrMany( where = 'blog_id="'+blog_id+'"', orderBy='create_at desc',limit = limit)
+    comments= await Comment.findAllOrMany( where = 'blog_id="'+blog_id+'"', orderBy='create_at asc',limit = limit)
     for d in comments:
         for k,v in d.items():
             if k=='create_at':

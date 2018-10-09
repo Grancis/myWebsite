@@ -23,6 +23,7 @@ function createListItem(user_name,content,create_at){
 }
 
 $(document).ready(function () {
+    $("#box-content").html($("#box-content").text())
     _blog_id=$('input[name="blog_id"]').val();
     nextPage();
 });

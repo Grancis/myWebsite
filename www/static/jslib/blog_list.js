@@ -12,7 +12,7 @@ function clickTo(id){
 
 function createListItem(id,subdivide,caption,summary,date){
     _id=id;
-    var card_blog=$('<div class="card-blog" class="col-md-8 col-md-offset-2 col-xs-12" onclick=clickTo('+'"'+id+'"'+')>'+'</div>')
+    var card_blog=$('<div class="card-blog col-md-8 col-md-offset-2 col-xs-12" onclick=clickTo('+'"'+id+'"'+')>'+'</div>')
     var box_caption=$('<div class="box-caption"></div>');
     var c_caption=$('<h1 class="caption">'+caption+'</h1>');
     var box_summary=$('<div class="box-summary"></div>');

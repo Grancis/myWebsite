@@ -70,7 +70,7 @@ body{
     right: 8px;
     bottom: 2px;
 }
-#card-date label{
+#date{
     color: gray;
     font-weight: lighter;
 }

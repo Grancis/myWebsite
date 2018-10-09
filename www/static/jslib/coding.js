@@ -24,16 +24,16 @@ function showContent(){
     $(content).css("opacity","1");
 }
 function frontEndClick(){
-    window.location.href="/get_blog_list/frontEnd";
+    window.location.href="/get_blog_list/coding_frontEnd";
 }
 function pythonClick(){
-    window.location.href="/get_blog_list/python";
+    window.location.href="/get_blog_list/coding_python";
 }
 function javaClick(){
-    window.location.href="/get_blog_list/java";
+    window.location.href="/get_blog_list/coding_java";
 }
 function matlabClick(){
-    window.location.href="/get_blog_list/matlab";
+    window.location.href="/get_blog_list/coding_matlab";
 }
 
 function createListItem(id,subdivide,caption,suammry,date){
