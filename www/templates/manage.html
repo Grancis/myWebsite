@@ -1,0 +1,32 @@
+{% extends "__base__.html" %}
+
+{% block head %}
+    {{super()}}
+    <style>
+        #box-link{
+            margin-top: 120px;
+            text-align: center;
+        }
+
+    </style>
+{% endblock %}
+
+{% block nav_list %}
+    <li><a href="/">Home</a></li>
+    <li><a href="/blog">Thinking Series</a></li>
+    <li><a href="/coding">Coding&Explore</a></li>
+    <li><a href="/photography">Photography</a></li>
+    <li class="active"><a href="/about">About&GitHub</a></li>
+    <li><a id="user" href={{href}}>{{name}}</a></li>
+{% endblock %}
+
+{% block container %}
+    <div class="col-md-4 col-md-offset-4 col-xs-12" id="box-link">
+        <a href="/manage/manage_users" class="btn btn-info btn-block">Manange Users</a>
+        <a href="/manage/manage_blogs" class="btn btn-info btn-block">Manange Blogs</a>
+        <a href="/manage/manage_comments" class="btn btn-info btn-block">Manage Comments</a>
+        <a href="/manage/update_page" class="btn btn-info btn-block">Update page</a>
+        <a href="/manage/push_blog_page" class="btn btn-info btn-block">Push Blog</a>
+        
+    </div>
+{% endblock %}

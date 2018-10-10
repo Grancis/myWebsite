@@ -168,6 +168,24 @@ async def manage_users(request):
         'href' : a_link_to
     }
 
+@get('/manage/manage_blogs')
+async def manage_blogs(request):
+    name,a_link_to=set_user(request)
+    return{
+        '__template__':'manage_blogs.html',
+        'name' : name,
+        'href' : a_link_to
+    }
+
+@get('/manage/manage_links')
+async def manage_links(request):
+    name,a_link_to=set_user(request)
+    return{
+        '__template__':'manage.html',
+        'name' : name,
+        'href' : a_link_to
+    }
+
 @get('/user_page')
 async def user_page(request):
     if request.__user__ is not None:
@@ -259,6 +277,13 @@ async def api_get_comments():
     for c in comments:
         c.create_at=datetime_filter(c.create_at)
     return dict(comments=comments)
+
+@get('/manage/api/blogs')
+async def api_get_blogs():
+    blogs = await Blog.findAllOrMany(orderBy='create_at desc')#where="`name`='test'"
+    for b in blogs:
+        b.create_at=datetime_filter(b.create_at)
+    return dict(blogs=blogs)
 
 @post('/api/authenticate')
 async def authenticate(*,email,passwrd):
@@ -421,3 +446,14 @@ async def delete_user(*,id):
     if affected != 1 :
         error='affected rows is %d' %affected 
     return dict(error=error,user=user)
+
+@post('/manage/api/delete_blog')
+async def delete_blog(*,id):
+    blog= await Blog.findAllOrMany('id=?',[id])
+    blog=blog[0]
+    affected= await blog.remove()
+    error='none'
+    if affected != 1 :
+        error='affected rows is %d' %affected 
+    return dict(error=error,blog=blog)
+

@@ -6,6 +6,7 @@ footer{
 }
 
 .footer-icon img{
+    opacity: 0.5;
     width: 24px;
     cursor: pointer;
 }
@@ -19,6 +20,6 @@ footer{
 }
 
 #svg-github:hover,#svg-weibo:hover{
-    width: 32px;
+    opacity: 1;
     cursor: pointer;
 }
