@@ -1,5 +1,5 @@
 configs={
     'db':{
-        'port':3306
+        'password':'Grancis.'
     },
 }
