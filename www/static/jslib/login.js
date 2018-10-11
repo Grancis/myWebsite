@@ -46,6 +46,7 @@ function login(){
 }
 
 function register(){
+    history_href=document.referrer
     error=""
     name = $("#r-name").val();
     // e_email = $("#r-eamil");

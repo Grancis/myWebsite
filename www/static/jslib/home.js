@@ -21,16 +21,16 @@ function show(){
 }
 
 function blogClick(){
-    window.location.href="blog.html";
+    window.location.href="/blog";
 }
 function codingClick(){
-    window.location.href="Coding.html";
+    window.location.href="/coding";
 }
 function photographyClick(){
-    window.location.href="photography.html";
+    window.location.href="/photography";
 }
 function aboutClick(){
-    window.location.href="about.html";
+    window.location.href="/about";
 }
 
 
