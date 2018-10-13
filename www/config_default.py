@@ -7,6 +7,6 @@ configs={
         'db':'mywebsite'
     },
     'session':{
-        'secret': 'aWEsoME'
+        'secret': 'awesome'
     }
 }
